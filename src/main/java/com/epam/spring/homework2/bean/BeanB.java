@@ -1,14 +1,19 @@
 package com.epam.spring.homework2.bean;
 
+import com.epam.spring.homework2.validation.annotation.IsInRange;
+import com.epam.spring.homework2.validation.annotation.IsNotNull;
+import com.epam.spring.homework2.validation.annotation.ValidationRequired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
+@ValidationRequired
 public class BeanB {
 
+    @IsNotNull
     @Value("${beanB.name}")
     private String name;
+
     @Value("${beanB.value}")
+    @IsInRange(fromIncluding = 1)
     private int value;
 
     public BeanB() {
@@ -21,6 +26,10 @@ public class BeanB {
 
     public void destroyB() {
         System.out.println("beanB: destroyB()");
+    }
+
+    public void anotherInitB() {
+        System.out.println("beanB: anotherInitB()");
     }
 
     @Override
