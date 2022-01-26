@@ -26,11 +26,12 @@ public class InRangeValidator implements Validator {
             if (value instanceof Number) {
                 int intValue = ((Number) value).intValue();
                 if (intValue > to || intValue < from) {
-                    throw new ValidationException("field " + field.getName() + "@" + obj +
+                    throw new ValidationException("validation error: field " + field.getName() + "@" + obj +
                             " is out of range [" + from + ", " + to + "]");
                 }
             } else {
-                throw new ValidationException("field " + field.getName() + "@" + obj + " is not numerical");
+                throw new ValidationException("validation error: field " + field.getName() + "@" + obj
+                        + " is not numerical");
             }
         } catch (IllegalAccessException e) {
             throw new ValidationException(e.getMessage(), e);

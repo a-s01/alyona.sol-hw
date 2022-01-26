@@ -13,11 +13,9 @@ import org.springframework.stereotype.Component;
 public class BeanA implements InitializingBean, DisposableBean {
 
     @IsNotNull
-    @Value("${beanA.name:default}")
     private String name;
 
     @IsInRange(fromIncluding = 1)
-    @Value("${beanA.value:100}")
     private int value;
 
     @Override

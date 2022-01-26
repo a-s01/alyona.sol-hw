@@ -18,9 +18,8 @@ public class BeanF {
 
     @IsInRange(fromIncluding = 1)
     private final int value;
-
-    @Autowired
-    public BeanF(@Value("${beanF.name}") String name, @Value("${beanF.value}") int value) {
+    
+    public BeanF(@Value("${beanF.name:default}") String name, @Value("${beanF.value:100}") int value) {
         this.name = name;
         this.value = value;
         System.out.println("beanF: object creation");

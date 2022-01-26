@@ -56,10 +56,8 @@ public class ValidationRequiredAnnotationBeanPostProcessor implements BeanPostPr
                 try {
                     Field field = fieldValidatorEntry.getKey();
                     fieldValidatorEntry.getValue().validate(field, bean);
-                    System.out.println(this.getClass().getSimpleName() +
-                            ": " + field.getName() + "@" + beanName + " passed validation");
                 } catch (ValidationException e) {
-                    throw new BeanInitializationException(e.getMessage(), e.getCause());
+                    System.out.println(this.getClass().getSimpleName() + ": " + e.getMessage());
                 }
             }
         }
