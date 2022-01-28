@@ -1,2 +1,23 @@
+# Inteliji #
 .idea/
 target/
+out/
+
+*.iml
+*.iws
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Java ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
