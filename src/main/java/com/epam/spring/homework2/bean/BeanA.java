@@ -5,7 +5,6 @@ import com.epam.spring.homework2.validation.annotation.IsNotNull;
 import com.epam.spring.homework2.validation.annotation.ValidationRequired;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component

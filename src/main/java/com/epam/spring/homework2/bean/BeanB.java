@@ -3,20 +3,19 @@ package com.epam.spring.homework2.bean;
 import com.epam.spring.homework2.validation.annotation.IsInRange;
 import com.epam.spring.homework2.validation.annotation.IsNotNull;
 import com.epam.spring.homework2.validation.annotation.ValidationRequired;
-import org.springframework.beans.factory.annotation.Value;
 
 @ValidationRequired
 public class BeanB {
 
     @IsNotNull
-    @Value("${beanB.name}")
-    private String name;
+    private final String name;
 
-    @Value("${beanB.value}")
     @IsInRange(fromIncluding = 1)
-    private int value;
+    private final int value;
 
-    public BeanB() {
+    public BeanB(String name, int value) {
+        this.name = name;
+        this.value = value;
         System.out.println("beanB: object creation");
     }
 

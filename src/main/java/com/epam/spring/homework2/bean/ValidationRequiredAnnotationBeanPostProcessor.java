@@ -5,7 +5,6 @@ import com.epam.spring.homework2.validation.Validator;
 import com.epam.spring.homework2.validation.ValidatorFactory;
 import com.epam.spring.homework2.validation.annotation.ValidationRequired;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,7 @@ public class ValidationRequiredAnnotationBeanPostProcessor implements BeanPostPr
      * Validation place is after all init methods, so postProcessAfterInitialization method will do it, and
      * postProcessAfterInitialization will save for it all beans required validation.
      */
-    private Map<String, Map<Field, Validator>> beansToValidate = new HashMap<>();
+    private final Map<String, Map<Field, Validator>> beansToValidate = new HashMap<>();
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) {
