@@ -27,7 +27,6 @@ public class BeanC {
         System.out.println("beanC: destroyC()");
     }
 
-
     @Override
     public String toString() {
         return "BeanC{" +
