@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
     @ResponseStatus(HttpStatus.OK)
@@ -36,7 +35,8 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{email}")
-    public UserDTO updateUser(@PathVariable String email, @RequestBody UserEditDTO userEditDTO) {
+    public UserDTO updateUser(@PathVariable String email,
+                              @RequestBody UserEditDTO userEditDTO) {
         return userService.updateUser(email, userEditDTO);
     }
 

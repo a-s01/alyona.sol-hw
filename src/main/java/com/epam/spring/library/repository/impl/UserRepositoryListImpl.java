@@ -16,9 +16,11 @@ public class UserRepositoryListImpl implements UserRepository {
     @Override
     public User getUser(String email) {
         return list.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("User is not found!"));
+                   .filter(user -> user.getEmail()
+                                       .equals(email))
+                   .findFirst()
+                   .orElseThrow(
+                           () -> new RuntimeException("User is not found!"));
     }
 
     @Override
@@ -29,12 +31,13 @@ public class UserRepositoryListImpl implements UserRepository {
     @Override
     public User createUser(User user) {
         Optional<User> existed = list.stream()
-                                    .filter(u -> u.getEmail()
-                                    .equals(user.getEmail()))
-                                    .findFirst();
+                                     .filter(u -> u.getEmail()
+                                                   .equals(user.getEmail()))
+                                     .findFirst();
 
         if (existed.isPresent()) {
-            throw new RuntimeException("User with email " + user.getEmail() + " already exists");
+            throw new RuntimeException(
+                    "User with email " + user.getEmail() + " already exists");
         }
 
         list.add(user);
@@ -43,7 +46,8 @@ public class UserRepositoryListImpl implements UserRepository {
 
     @Override
     public User updateUser(User user) {
-        boolean isDeleted = list.removeIf(u -> u.getEmail().equals(user.getEmail()));
+        boolean isDeleted = list.removeIf(u -> u.getEmail()
+                                                .equals(user.getEmail()));
         if (isDeleted) {
             list.add(user);
         } else {
@@ -54,6 +58,7 @@ public class UserRepositoryListImpl implements UserRepository {
 
     @Override
     public void deleteUser(String email) {
-        list.removeIf(user -> user.getEmail().equals(email));
+        list.removeIf(user -> user.getEmail()
+                                  .equals(email));
     }
 }

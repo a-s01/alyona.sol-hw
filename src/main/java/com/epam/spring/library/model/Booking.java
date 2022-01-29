@@ -14,7 +14,7 @@ public class Booking {
     private Place located;
     private List<Book> books;
 
-     public enum State {
+    public enum State {
         UNKNOWN, NEW, BOOKED, DELIVERED, DONE, CANCELED
     }
 

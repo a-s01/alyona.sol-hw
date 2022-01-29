@@ -15,7 +15,8 @@ public class LanguageRepositoryListImpl implements LanguageRepository {
 
     private final List<Language> supportedLanguages;
 
-    public LanguageRepositoryListImpl(@Qualifier("supportedLanguages") List<Language> supportedLanguages) {
+    public LanguageRepositoryListImpl(@Qualifier("supportedLanguages")
+                                              List<Language> supportedLanguages) {
         this.supportedLanguages = supportedLanguages;
     }
 

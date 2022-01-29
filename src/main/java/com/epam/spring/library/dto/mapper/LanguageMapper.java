@@ -8,7 +8,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface LanguageMapper {
+
     LanguageDTO toDTO(Language language);
+
     Language toLanguage(LanguageDTO languageDTO);
+
     List<LanguageDTO> toDTO(List<Language> languages);
 }

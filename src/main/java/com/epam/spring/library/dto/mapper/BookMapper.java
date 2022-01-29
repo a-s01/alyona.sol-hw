@@ -8,11 +8,16 @@ import java.time.Year;
 
 @Mapper(componentModel = "spring", uses = AuthorMapper.class)
 public interface BookMapper {
+
     BookDTO toDTO(Book book);
+
     Book toBook(BookDTO bookDto);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "authors", defaultExpression = "java(new java.util.ArrayList())")
+    @BeanMapping(
+            nullValuePropertyMappingStrategy =
+                    NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "authors",
+             defaultExpression = "java(new java.util.ArrayList())")
     void updateBook(BookDTO bookDTO, @MappingTarget Book book);
 
     default int map(Year year) {

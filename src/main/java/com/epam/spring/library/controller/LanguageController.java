@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("api/v1/language")
 @RequiredArgsConstructor
 public class LanguageController {
-
     private final LanguageService languageService;
 
     @ResponseStatus(HttpStatus.OK)

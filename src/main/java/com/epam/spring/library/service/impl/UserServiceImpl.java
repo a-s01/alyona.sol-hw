@@ -17,7 +17,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository repository;
     private final UserMapper mapper;
     private final Language defaultLanguage;

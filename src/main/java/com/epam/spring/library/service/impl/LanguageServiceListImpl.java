@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LanguageServiceListImpl implements LanguageService {
-
     private final LanguageRepository repository;
     private final LanguageMapper mapper;
 

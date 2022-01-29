@@ -16,10 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 public class BeanConfig {
-
     private List<String> languages;
     private String primaryLanguage;
-
 
     @Bean
     public List<Language> supportedLanguages() {
@@ -27,12 +25,11 @@ public class BeanConfig {
         int i = 1;
         for (String s : languages) {
             Language lang = Language.builder()
-                    .id(i++)
-                    .code(s)
-                    .build();
+                                    .id(i++)
+                                    .code(s)
+                                    .build();
             list.add(lang);
         }
-
         return list;
     }
 
@@ -40,9 +37,9 @@ public class BeanConfig {
     @DependsOn("supportedLanguages")
     public Language defaultLanguage() {
         return supportedLanguages().stream()
-                .filter(lang -> lang.getCode().equals(primaryLanguage))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                                   .filter(lang -> lang.getCode()
+                                                       .equals(primaryLanguage))
+                                   .findFirst()
+                                   .orElseThrow(IllegalArgumentException::new);
     }
-
 }
