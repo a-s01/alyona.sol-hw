@@ -1,0 +1,6 @@
+config:
+  primary-language: "en"
+  languages:
+      - "ru"
+      - "ua"
+      - "en"
