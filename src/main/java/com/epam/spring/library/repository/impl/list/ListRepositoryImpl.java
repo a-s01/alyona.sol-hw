@@ -1,5 +1,6 @@
 package com.epam.spring.library.repository.impl.list;
 
+import com.epam.spring.library.model.Entity;
 import com.epam.spring.library.repository.BaseRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ListRepositoryImpl<T> implements BaseRepository<T> {
+public class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
     private final List<T> list = new ArrayList<>();
 
     public <R> T get(R key, Function<T, R> keyGetter) {
@@ -48,6 +49,7 @@ public class ListRepositoryImpl<T> implements BaseRepository<T> {
                                        + " key already exists");
         }
 
+        model.setId(list.size() + 1);
         list.add(model);
         return model;
     }

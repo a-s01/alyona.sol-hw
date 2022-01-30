@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Data
 @Builder
-public class Author {
+public class Author implements Entity {
     private int id;
     private String defaultName;
     private Language defaultLanguage;

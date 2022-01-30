@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class Book {
+public class Book implements Entity {
     private int id;
     private String title;
     private String isbn;

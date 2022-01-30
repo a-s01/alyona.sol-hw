@@ -9,7 +9,7 @@ import java.util.Calendar;
 @Data
 @ToString(exclude = {"password", "salt"})
 @Builder
-public class User {
+public class User implements Entity {
     private int id;
     private String email;
     private String password;

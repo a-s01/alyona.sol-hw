@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class Booking {
+public class Booking implements Entity {
     private int id;
     private User user;
     private State state;

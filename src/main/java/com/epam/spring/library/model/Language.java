@@ -7,7 +7,7 @@ import lombok.extern.jackson.Jacksonized;
 @Data
 @Builder
 @Jacksonized
-public class Language {
+public class Language implements Entity {
     private int id;
     private String code;
 }
