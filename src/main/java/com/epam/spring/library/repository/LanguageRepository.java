@@ -7,4 +7,6 @@ import java.util.List;
 public interface LanguageRepository {
 
     List<Language> getSupportedLanguages();
+
+    Language getLanguage(String code);
 }

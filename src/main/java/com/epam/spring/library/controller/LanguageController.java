@@ -1,6 +1,5 @@
 package com.epam.spring.library.controller;
 
-import com.epam.spring.library.dto.LanguageDTO;
 import com.epam.spring.library.service.LanguageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,11 +14,11 @@ import java.util.List;
 @RequestMapping("api/v1/language")
 @RequiredArgsConstructor
 public class LanguageController {
-    private final LanguageService languageService;
+    private final LanguageService service;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<LanguageDTO> getSupportedLanguages() {
-        return languageService.getSupportedLanguages();
+    public List<String> getSupportedLanguages() {
+        return service.getSupportedLanguages();
     }
 }

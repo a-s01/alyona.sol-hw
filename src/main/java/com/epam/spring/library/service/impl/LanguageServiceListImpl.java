@@ -1,6 +1,5 @@
 package com.epam.spring.library.service.impl;
 
-import com.epam.spring.library.dto.LanguageDTO;
 import com.epam.spring.library.dto.mapper.LanguageMapper;
 import com.epam.spring.library.repository.LanguageRepository;
 import com.epam.spring.library.service.LanguageService;
@@ -18,7 +17,7 @@ public class LanguageServiceListImpl implements LanguageService {
     private final LanguageMapper mapper;
 
     @Override
-    public List<LanguageDTO> getSupportedLanguages() {
+    public List<String> getSupportedLanguages() {
         log.info("get all supported languages");
         return mapper.toDTO(repository.getSupportedLanguages());
     }

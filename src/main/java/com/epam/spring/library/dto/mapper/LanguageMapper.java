@@ -1,17 +1,30 @@
 package com.epam.spring.library.dto.mapper;
 
-import com.epam.spring.library.dto.LanguageDTO;
 import com.epam.spring.library.model.Language;
-import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
 public interface LanguageMapper {
 
-    LanguageDTO toDTO(Language language);
+    Language toLanguage(String code);
 
-    Language toLanguage(LanguageDTO languageDTO);
+    default String toDTO(Language language) {
+        if (language == null) {
+            return null;
+        }
 
-    List<LanguageDTO> toDTO(List<Language> languages);
+        return language.getCode();
+    }
+
+    default List<String> toDTO(List<Language> languages) {
+        if (languages == null) {
+            return null;
+        }
+
+        return languages.stream()
+                        .map(lang -> lang.getCode())
+                        .collect(Collectors.toList());
+
+    }
 }

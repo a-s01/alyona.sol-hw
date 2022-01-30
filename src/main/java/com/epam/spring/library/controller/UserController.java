@@ -13,36 +13,36 @@ import java.util.List;
 @RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserService service;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{email}")
     public UserDTO getUser(@PathVariable String email) {
-        return userService.getUser(email);
+        return service.getUser(email);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
+        return service.getAllUsers();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public UserDTO createUser(@RequestBody UserEditDTO userEditDTO) {
-        return userService.createUser(userEditDTO);
+        return service.createUser(userEditDTO);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{email}")
     public UserDTO updateUser(@PathVariable String email,
                               @RequestBody UserEditDTO userEditDTO) {
-        return userService.updateUser(email, userEditDTO);
+        return service.updateUser(email, userEditDTO);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{email}")
     public void deleteUser(@PathVariable String email) {
-        userService.deleteUser(email);
+        service.deleteUser(email);
     }
 }
