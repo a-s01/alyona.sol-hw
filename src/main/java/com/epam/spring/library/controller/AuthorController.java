@@ -32,7 +32,7 @@ public class AuthorController {
         return service.createAuthor(authorDTO);
     }
 
-    @PutMapping("/{name}")
+    @PatchMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorDTO updateAuthor(@PathVariable String name,
                                   @RequestBody AuthorDTO authorDTO) {

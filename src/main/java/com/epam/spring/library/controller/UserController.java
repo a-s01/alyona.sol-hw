@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{email}")
+    @PatchMapping("/{email}")
     public UserDTO updateUser(@PathVariable String email,
                               @RequestBody UserEditDTO userEditDTO) {
         return service.updateUser(email, userEditDTO);

@@ -32,7 +32,7 @@ public class BookController {
         return service.getAllBooks();
     }
 
-    @PutMapping("/{isbn}")
+    @PatchMapping("/{isbn}")
     @ResponseStatus(HttpStatus.OK)
     public BookDTO updateBook(@PathVariable String isbn,
                               @RequestBody BookDTO bookDTO) {
