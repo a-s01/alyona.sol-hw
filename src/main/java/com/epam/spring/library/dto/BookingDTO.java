@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 @Data
@@ -16,5 +14,4 @@ public class BookingDTO {
     private UserDTO user;
     private String state;
     private String located;
-    private List<BookDTO> books;
 }
