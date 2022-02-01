@@ -4,7 +4,7 @@ import com.epam.spring.library.model.Entity;
 import com.epam.spring.library.repository.BaseRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
     private final List<T> list = new ArrayList<>();

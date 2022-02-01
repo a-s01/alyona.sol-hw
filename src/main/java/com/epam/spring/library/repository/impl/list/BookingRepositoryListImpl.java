@@ -4,11 +4,11 @@ import com.epam.spring.library.model.Booking;
 import com.epam.spring.library.repository.BaseRepository;
 import com.epam.spring.library.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class BookingRepositoryListImpl implements BookingRepository {
     private final BaseRepository<Booking> repository;

@@ -54,8 +54,9 @@ public class AuthorController {
 
     @GetMapping("/{name}/name-translations/{langCode}")
     @ResponseStatus(HttpStatus.OK)
-    public String getAuthorNameTranslationByLangCode(
-            @PathVariable String name, @PathVariable String langCode) {
+    public String getAuthorNameTranslationByLangCode(@PathVariable String name,
+                                                     @PathVariable
+                                                             String langCode) {
         return service.getAuthorNameTranslationByLangCode(name, langCode);
     }
 
@@ -66,8 +67,7 @@ public class AuthorController {
             @PathVariable String langCode,
             @RequestBody String nameTranslation) {
         return service.updateAuthorNameTranslation(name, langCode,
-                                                   nameTranslation
-                                                  );
+                                                   nameTranslation);
     }
 
     @DeleteMapping("/{name}/name-translations")
@@ -78,8 +78,9 @@ public class AuthorController {
 
     @DeleteMapping("/{name}/name-translations/{langCode}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAuthorNameTranslationByLangCode(@PathVariable String name,
-                                                      @PathVariable String langCode) {
+    public void deleteAuthorNameTranslationByLangCode(
+            @PathVariable String name,
+            @PathVariable String langCode) {
         service.deleteAuthorNameTranslationByLangCode(name, langCode);
     }
 }

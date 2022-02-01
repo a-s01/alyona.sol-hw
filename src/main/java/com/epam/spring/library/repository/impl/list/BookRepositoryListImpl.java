@@ -4,11 +4,11 @@ import com.epam.spring.library.model.Book;
 import com.epam.spring.library.repository.BaseRepository;
 import com.epam.spring.library.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class BookRepositoryListImpl implements BookRepository {
     private final BaseRepository<Book> repository;

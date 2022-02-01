@@ -40,7 +40,7 @@ public class UserController {
         return service.updateUser(email, userEditDTO);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{email}")
     public void deleteUser(@PathVariable String email) {
         service.deleteUser(email);
