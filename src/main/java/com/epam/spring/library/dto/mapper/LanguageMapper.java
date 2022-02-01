@@ -3,14 +3,14 @@ package com.epam.spring.library.dto.mapper;
 import com.epam.spring.library.model.Language;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public interface LanguageMapper {
     /**
      * LanguageDTO seems to be an overhead, as we need only a String
      * representing language code. Also, I want to retrieve actual supported
-     * language from database in mapping. That's why I write custom mapper
-     * and don't use MapStruct here
+     * language from database in mapping (not sure if it's ok on this level,
+     * isn't it?). That's why I write custom mapper and don't use MapStruct here
      */
 
     /**
@@ -20,22 +20,9 @@ public interface LanguageMapper {
      */
     Language toLanguage(String code);
 
-    default String toDTO(Language language) {
-        if (language == null) {
-            return null;
-        }
+    String toDTO(Language language);
 
-        return language.getCode();
-    }
+    List<String> toDTO(List<Language> languages);
 
-    default List<String> toDTO(List<Language> languages) {
-        if (languages == null) {
-            return null;
-        }
-
-        return languages.stream()
-                        .map(lang -> lang.getCode())
-                        .collect(Collectors.toList());
-
-    }
+    Map<String, String> toDTO(Map<Language, String> map);
 }

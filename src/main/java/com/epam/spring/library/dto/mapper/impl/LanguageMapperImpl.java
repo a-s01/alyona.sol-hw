@@ -6,6 +6,9 @@ import com.epam.spring.library.repository.LanguageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class LanguageMapperImpl implements LanguageMapper {
@@ -18,5 +21,36 @@ public class LanguageMapperImpl implements LanguageMapper {
         }
 
         return repository.getLanguage(code);
+    }
+
+    @Override
+    public String toDTO(Language language) {
+        if (Objects.isNull(language)) {
+            return null;
+        }
+
+        return language.getCode();
+    }
+
+    @Override
+    public List<String> toDTO(List<Language> languages) {
+        if (Objects.isNull(languages)) {
+            return new ArrayList<>();
+        }
+
+        return languages.stream()
+                        .map(Language::getCode)
+                        .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, String> toDTO(Map<Language, String> map) {
+        if (Objects.isNull(map)) {
+            return new HashMap<>();
+        }
+
+        Map<String, String> result = new HashMap<>();
+        map.forEach((k, v) -> result.put(toDTO(k), v));
+        return result;
     }
 }

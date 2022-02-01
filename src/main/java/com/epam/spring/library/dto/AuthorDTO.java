@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Map;
-
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 @Data
@@ -18,5 +16,4 @@ public class AuthorDTO {
     private String defaultName;
     @JsonAlias("language")
     private String defaultLanguage;
-    private Map<String, String> i18Names;
 }

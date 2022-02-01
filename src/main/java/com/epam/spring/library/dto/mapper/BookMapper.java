@@ -2,7 +2,10 @@ package com.epam.spring.library.dto.mapper;
 
 import com.epam.spring.library.dto.BookDTO;
 import com.epam.spring.library.model.Book;
-import org.mapstruct.*;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.time.Year;
 import java.util.List;

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/author")
@@ -40,7 +41,45 @@ public class AuthorController {
     }
 
     @DeleteMapping("/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAuthor(@PathVariable String name) {
         service.deleteAuthor(name);
+    }
+
+    @GetMapping("/{name}/name-translations")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, String> getAuthorI18Names(@PathVariable String name) {
+        return service.getAuthorI18Names(name);
+    }
+
+    @GetMapping("/{name}/name-translations/{langCode}")
+    @ResponseStatus(HttpStatus.OK)
+    public String getAuthorNameTranslationByLangCode(
+            @PathVariable String name, @PathVariable String langCode) {
+        return service.getAuthorNameTranslationByLangCode(name, langCode);
+    }
+
+    @PutMapping("/{name}/name-translations/{langCode}")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, String> updateAuthorNameTranslation(
+            @PathVariable String name,
+            @PathVariable String langCode,
+            @RequestBody String nameTranslation) {
+        return service.updateAuthorNameTranslation(name, langCode,
+                                                   nameTranslation
+                                                  );
+    }
+
+    @DeleteMapping("/{name}/name-translations")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void clearAuthorI18Names(@PathVariable String name) {
+        service.clearAuthorI18Names(name);
+    }
+
+    @DeleteMapping("/{name}/name-translations/{langCode}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuthorNameTranslationByLangCode(@PathVariable String name,
+                                                      @PathVariable String langCode) {
+        service.deleteAuthorNameTranslationByLangCode(name, langCode);
     }
 }
