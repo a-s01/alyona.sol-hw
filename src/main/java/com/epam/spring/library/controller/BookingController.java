@@ -56,15 +56,17 @@ public class BookingController {
     @PostMapping("/{id}/books")
     @ResponseStatus(HttpStatus.CREATED)
     public List<BookDTO> addBookListToBooking(@PathVariable int id,
-                                              @RequestBody List<BookDTO> bookDTOs) {
+                                              @RequestBody
+                                                      List<BookDTO> bookDTOs) {
         return service.addBookToBooking(id, bookDTOs);
     }
 
     @PutMapping("/{id}/books")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookDTO> updateBooksInBooking(@PathVariable int id,
-                                              @RequestBody List<BookDTO> bookDTOs) {
-        return service.updateBooksInBooking(id, bookDTOs);
+    public List<BookDTO> updateBooksListInBooking(@PathVariable int id,
+                                                  @RequestBody
+                                                          List<BookDTO> bookDTOs) {
+        return service.updateBooksListInBooking(id, bookDTOs);
     }
 
     @DeleteMapping("/{id}/books/{isbn}")

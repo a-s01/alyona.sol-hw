@@ -17,13 +17,13 @@ public interface AuthorService {
 
     List<AuthorDTO> getAllAuthors();
 
-    Map<String, String> getAuthorI18Names(String name);
+    Map<String, String> getAllAuthorNameTranslations(String name);
 
     Map<String, String> updateAuthorNameTranslation(String name,
                                                     String langCode,
                                                     String nameTranslation);
 
-    void clearAuthorI18Names(String name);
+    void clearAuthorNameTranslationsList(String name);
 
     void deleteAuthorNameTranslationByLangCode(String name, String langCode);
 

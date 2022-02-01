@@ -23,7 +23,7 @@ public interface BookingService {
 
     List<BookDTO> getBooksInBooking(int id);
 
-    List<BookDTO> updateBooksInBooking(int id, List<BookDTO> bookDTOs);
+    List<BookDTO> updateBooksListInBooking(int id, List<BookDTO> bookDTOs);
 
     void clearBookListInBooking(int id);
 }
