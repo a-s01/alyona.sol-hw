@@ -19,8 +19,6 @@ public interface BookMapper {
     @BeanMapping(
             nullValuePropertyMappingStrategy =
                     NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "authors",
-             defaultExpression = "java(new java.util.ArrayList())")
     void updateBook(BookDTO bookDTO, @MappingTarget Book book);
 
     default int map(Year year) {

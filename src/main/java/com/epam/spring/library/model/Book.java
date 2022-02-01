@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.Year;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -15,5 +16,6 @@ public class Book implements Entity {
     private Year year;
     private String langCode;
     private int keepPeriod;
-    private List<Author> authors;
+    @Builder.Default
+    private Set<Author> authors = new HashSet<>();
 }
