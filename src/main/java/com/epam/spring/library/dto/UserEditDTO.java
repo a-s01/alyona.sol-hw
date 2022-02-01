@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
+/**
+ * Will be replaced by validation on OnEdit.class in next iteration of homework
+ */
 @Data
 @Builder
 @ToString(exclude = {"password", "confirmPassword"})

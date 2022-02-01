@@ -6,7 +6,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public interface LanguageMapper {
+    /**
+     * LanguageDTO seems to be an overhead, as we need only a String
+     * representing language code. Also, I want to retrieve actual supported
+     * language from database in mapping. That's why I write custom mapper
+     * and don't use MapStruct here
+     */
 
+    /**
+     * Must return language supported by this app, exception otherwise
+     * @param code iso 2- or 3-letter language code
+     * @return object of supported language specified by code
+     */
     Language toLanguage(String code);
 
     default String toDTO(Language language) {

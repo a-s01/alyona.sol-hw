@@ -21,13 +21,13 @@ public class BeanConfig {
 
     @Bean
     public List<Language> supportedLanguages() {
+        // implementation is prospective subject to change in database
+        // supported version of homework. For now, it's emulates getting
+        // supported languages from database on startup
         List<Language> list = new ArrayList<>(languages.size());
         int i = 1;
         for (String s : languages) {
-            Language lang = Language.builder()
-                                    .id(i++)
-                                    .code(s)
-                                    .build();
+            Language lang = Language.builder().id(i++).code(s).build();
             list.add(lang);
         }
         return list;
@@ -36,6 +36,7 @@ public class BeanConfig {
     @Bean
     @DependsOn("supportedLanguages")
     public Language defaultLanguage() {
+        // same as above, will be changed in next iteration of homework
         return supportedLanguages().stream()
                                    .filter(lang -> lang.getCode()
                                                        .equals(primaryLanguage))

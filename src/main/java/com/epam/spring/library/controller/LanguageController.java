@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Language controller is responsible for handle request related to
+ * apps supported languages. Can be extended, if there's a need in language
+ * editing (wasn't required in original project TR)
+ */
 @RestController
 @RequestMapping("api/v1/language")
 @RequiredArgsConstructor
