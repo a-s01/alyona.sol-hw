@@ -4,3 +4,7 @@ config:
       - "ru"
       - "ua"
       - "en"
+
+spring:
+  profiles:
+    active: "dev"

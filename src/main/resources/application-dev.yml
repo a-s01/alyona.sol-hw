@@ -1,0 +1,6 @@
+spring:
+  devtools:
+    devtools:
+      add-properties: "true"
+    restart:
+      enabled: "true"
