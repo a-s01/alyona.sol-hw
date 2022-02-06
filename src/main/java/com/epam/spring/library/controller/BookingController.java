@@ -1,84 +1,72 @@
 package com.epam.spring.library.controller;
 
+import com.epam.spring.library.api.BookingAPI;
 import com.epam.spring.library.dto.BookDTO;
 import com.epam.spring.library.dto.BookingDTO;
 import com.epam.spring.library.service.BookingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/booking")
 @RequiredArgsConstructor
-public class BookingController {
+public class BookingController implements BookingAPI {
     private final BookingService service;
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
+    @Override
     public List<BookingDTO> getAllBookings() {
         return service.getAllBookings();
     }
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public BookingDTO getBooking(@PathVariable int id) {
+    @Override
+    public BookingDTO getBooking(int id) {
         return service.getBooking(id);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public BookingDTO createBooking(@RequestBody BookingDTO bookingDTO) {
+    @Override
+    public BookingDTO createBooking(BookingDTO bookingDTO) {
         return service.createBooking(bookingDTO);
     }
 
-    @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @Override
     // TODO: add status and place validation here
-    public BookingDTO updateBooking(@PathVariable int id,
-                                    @RequestBody BookingDTO bookingDTO) {
+    public BookingDTO updateBooking(int id, BookingDTO bookingDTO) {
         return service.updateBooking(id, bookingDTO);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBooking(@PathVariable int id) {
+    @Override
+    public void deleteBooking(int id) {
         service.deleteBooking(id);
     }
 
-    @GetMapping("/{id}/books")
-    @ResponseStatus(HttpStatus.OK)
-    public List<BookDTO> getBooksInBooking(@PathVariable int id) {
+    @Override
+    public List<BookDTO> getBooksInBooking(int id) {
         return service.getBooksInBooking(id);
     }
 
-    @PostMapping("/{id}/books")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<BookDTO> addBookListToBooking(@PathVariable int id,
+    @Override
+    public List<BookDTO> addBookListToBooking(int id,
                                               @RequestBody
                                                       List<BookDTO> bookDTOs) {
         return service.addBookToBooking(id, bookDTOs);
     }
 
-    @PutMapping("/{id}/books")
-    @ResponseStatus(HttpStatus.OK)
-    public List<BookDTO> updateBooksListInBooking(@PathVariable int id,
+    @Override
+    public List<BookDTO> updateBooksListInBooking(int id,
                                                   @RequestBody
                                                           List<BookDTO> bookDTOs) {
         return service.updateBooksListInBooking(id, bookDTOs);
     }
 
-    @DeleteMapping("/{id}/books/{isbn}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookFromBooking(@PathVariable int id,
-                                      @PathVariable String isbn) {
+    @Override
+    public void deleteBookFromBooking(int id, String isbn) {
         service.deleteBookFromBooking(id, isbn);
     }
 
-    @DeleteMapping("/{id}/books")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void clearBookListInBooking(@PathVariable int id) {
+    @Override
+    public void clearBookListInBooking(int id) {
         service.clearBookListInBooking(id);
     }
 }
