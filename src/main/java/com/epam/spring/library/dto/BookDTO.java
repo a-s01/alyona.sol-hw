@@ -22,6 +22,8 @@ public class BookDTO {
     @NotBlank(message = "Book ISBN must be not blank")
     @ISBN
     private String isbn;
+
+    @PublicationYear
     private int year;
 
     @JsonAlias("language")
