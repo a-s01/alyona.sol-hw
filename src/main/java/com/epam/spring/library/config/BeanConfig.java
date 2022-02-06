@@ -1,5 +1,6 @@
 package com.epam.spring.library.config;
 
+import com.epam.spring.library.model.Book;
 import com.epam.spring.library.model.Language;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.List;
 public class BeanConfig {
     private List<String> languages;
     private String primaryLanguage;
+    private int keepPeriod;
 
     @Bean
     public List<Language> supportedLanguages() {
@@ -42,5 +44,10 @@ public class BeanConfig {
                                                        .equals(primaryLanguage))
                                    .findFirst()
                                    .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Bean
+    public Book bookDefaults() {
+        return Book.builder().keepPeriod(keepPeriod).build();
     }
 }

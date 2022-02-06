@@ -2,7 +2,6 @@ package com.epam.spring.library.controller;
 
 import com.epam.spring.library.api.UserAPI;
 import com.epam.spring.library.dto.UserDTO;
-import com.epam.spring.library.dto.UserEditDTO;
 import com.epam.spring.library.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,14 +26,14 @@ public class UserController implements UserAPI {
     }
 
     @Override
-    public UserDTO createUser(@RequestBody UserEditDTO userEditDTO) {
-        return service.createUser(userEditDTO);
+    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+        return service.createUser(userDTO);
     }
 
     @Override
     public UserDTO updateUser(@PathVariable String email,
-                              @RequestBody UserEditDTO userEditDTO) {
-        return service.updateUser(email, userEditDTO);
+                              @RequestBody UserDTO userDTO) {
+        return service.updateUser(email, userDTO);
     }
 
     @Override

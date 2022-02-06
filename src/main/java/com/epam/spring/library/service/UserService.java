@@ -1,7 +1,6 @@
 package com.epam.spring.library.service;
 
 import com.epam.spring.library.dto.UserDTO;
-import com.epam.spring.library.dto.UserEditDTO;
 
 import java.util.List;
 
@@ -9,9 +8,9 @@ public interface UserService {
 
     UserDTO getUser(String email);
 
-    UserDTO createUser(UserEditDTO userDTO);
+    UserDTO createUser(UserDTO userDTO);
 
-    UserDTO updateUser(String email, UserEditDTO userDTO);
+    UserDTO updateUser(String email, UserDTO userDTO);
 
     void deleteUser(String email);
 

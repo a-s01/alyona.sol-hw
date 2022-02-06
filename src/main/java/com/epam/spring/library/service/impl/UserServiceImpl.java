@@ -1,7 +1,6 @@
 package com.epam.spring.library.service.impl;
 
 import com.epam.spring.library.dto.UserDTO;
-import com.epam.spring.library.dto.UserEditDTO;
 import com.epam.spring.library.dto.mapper.UserMapper;
 import com.epam.spring.library.model.Language;
 import com.epam.spring.library.model.User;
@@ -26,8 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO createUser(UserEditDTO userEditDTO) {
-        User newUser = setUserDefaults(mapper.createUser(userEditDTO));
+    public UserDTO createUser(UserDTO userDTO) {
+        User newUser = setUserDefaults(mapper.toUser(userDTO));
         User user = repository.createUser(newUser);
         return mapper.toDTO(user);
     }
@@ -41,9 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(String email, UserEditDTO userEditDTO) {
+    public UserDTO updateUser(String email, UserDTO userDTO) {
         User toUpdate = repository.getUser(email);
-        mapper.updateUser(userEditDTO, toUpdate);
+        mapper.updateUser(userDTO, toUpdate);
         return mapper.toDTO(repository.updateUser(toUpdate));
     }
 

@@ -4,7 +4,7 @@ config:
       - "ru"
       - "ua"
       - "en"
-
+  keepPeriod: 14
 spring:
   profiles:
     active: "dev"
