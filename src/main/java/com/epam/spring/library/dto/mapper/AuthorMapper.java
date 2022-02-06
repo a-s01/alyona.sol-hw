@@ -2,10 +2,7 @@ package com.epam.spring.library.dto.mapper;
 
 import com.epam.spring.library.dto.AuthorDTO;
 import com.epam.spring.library.model.Author;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 import java.util.Set;
@@ -24,5 +21,6 @@ public interface AuthorMapper {
     @BeanMapping(
             nullValuePropertyMappingStrategy =
                     NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
     void updateAuthor(AuthorDTO authorDTO, @MappingTarget Author author);
 }

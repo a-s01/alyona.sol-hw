@@ -2,10 +2,7 @@ package com.epam.spring.library.dto.mapper;
 
 import com.epam.spring.library.dto.BookDTO;
 import com.epam.spring.library.model.Book;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.time.Year;
 import java.util.List;
@@ -22,6 +19,7 @@ public interface BookMapper {
     @BeanMapping(
             nullValuePropertyMappingStrategy =
                     NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
     void updateBook(BookDTO bookDTO, @MappingTarget Book book);
 
     default int map(Year year) {

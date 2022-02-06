@@ -3,10 +3,7 @@ package com.epam.spring.library.dto.mapper;
 import com.epam.spring.library.dto.UserDTO;
 import com.epam.spring.library.dto.UserEditDTO;
 import com.epam.spring.library.model.User;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -24,5 +21,6 @@ public interface UserMapper {
     @BeanMapping(
             nullValuePropertyMappingStrategy =
                     NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
     void updateUser(UserEditDTO userEditDTO, @MappingTarget User user);
 }

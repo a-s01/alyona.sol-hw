@@ -2,10 +2,7 @@ package com.epam.spring.library.dto.mapper;
 
 import com.epam.spring.library.dto.BookingDTO;
 import com.epam.spring.library.model.Booking;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -21,5 +18,6 @@ public interface BookingMapper {
     @BeanMapping(
             nullValuePropertyMappingStrategy =
                     NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
     void updateBooking(BookingDTO bookingDTO, @MappingTarget Booking booking);
 }
