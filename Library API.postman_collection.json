@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test\",\n    \"password\": \"password\",\n    \"confirmPassword\": \"password\",\n    \"name\": \"Test\"\n}",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"password\",\n    \"confirmPassword\": \"password\",\n    \"name\": \"Test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,26 +42,9 @@
 					"name": "Get user",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Update user",
-					"request": {
-						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test-updated\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/user/test",
+							"raw": "http://localhost:8080/api/v1/user/test@test.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -71,7 +54,38 @@
 								"api",
 								"v1",
 								"user",
-								"test"
+								"test@test.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"preferredLanguage\": \"ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/test@test.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"test@test.com"
 							]
 						}
 					},
@@ -83,7 +97,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/user/test",
+							"raw": "http://localhost:8080/api/v1/user/test@test.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -93,7 +107,7 @@
 								"api",
 								"v1",
 								"user",
-								"test"
+								"test@test.com"
 							]
 						}
 					},
@@ -103,7 +117,20 @@
 					"name": "Get all users",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						}
 					},
 					"response": []
 				}
@@ -116,7 +143,20 @@
 					"name": "Get all supported languages",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/language",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"language"
+							]
+						}
 					},
 					"response": []
 				}
@@ -135,7 +175,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"автор\"}",
+									"raw": "author1",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -143,7 +183,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/author/Author1/name-translations/en",
+									"raw": "http://localhost:8080/api/v1/author/author1/name-translations/en",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -153,7 +193,7 @@
 										"api",
 										"v1",
 										"author",
-										"Author1",
+										"author1",
 										"name-translations",
 										"en"
 									]
@@ -214,7 +254,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/author/Author1/name-translations/en",
+									"raw": "http://localhost:8080/api/v1/author/author1/name-translations/en",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -224,7 +264,7 @@
 										"api",
 										"v1",
 										"author",
-										"Author1",
+										"author1",
 										"name-translations",
 										"en"
 									]
@@ -264,7 +304,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"author3\",\n    \"language\": \"en\"\n}",
+							"raw": "{\n    \"name\": \"author1\",\n    \"language\": \"en\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -291,26 +331,9 @@
 					"name": "Get author",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Update author",
-					"request": {
-						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Author\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/author/Author1",
+							"raw": "http://localhost:8080/api/v1/author/author1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -320,7 +343,38 @@
 								"api",
 								"v1",
 								"author",
-								"Author1"
+								"author1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update author",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"language\": \"ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author/author1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author",
+								"author1"
 							]
 						}
 					},
@@ -332,7 +386,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/author/Author",
+							"raw": "http://localhost:8080/api/v1/author/author1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -342,7 +396,7 @@
 								"api",
 								"v1",
 								"author",
-								"Author"
+								"author1"
 							]
 						}
 					},
@@ -352,7 +406,20 @@
 					"name": "Get all authors",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author"
+							]
+						}
 					},
 					"response": []
 				}
@@ -371,7 +438,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n    {\"name\": \"author1\"},\n    {\"name\": \"author2\"},\n]    ",
+									"raw": "[\n    {\"name\": \"author1\"},\n    {\"name\": \"author2\"}\n]    ",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -452,29 +519,6 @@
 							"response": []
 						},
 						{
-							"name": "Delete all authors from book",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/v1/book/1/authors",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"book",
-										"1",
-										"authors"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Delete author from book",
 							"request": {
 								"method": "DELETE",
@@ -497,6 +541,29 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Delete all authors from book",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/book/1/authors",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"1",
+										"authors"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -507,7 +574,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"isbn\": \"120394785\",\n    \"title\": \"New year\",\n    \"year\": 1999,\n    \"language\": \"en\"\n}",
+							"raw": "{\n    \"isbn\": \"1\",\n    \"title\": \"New year\",\n    \"year\": 1999,\n    \"language\": \"en\",\n    \"keepPeriod\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -536,7 +603,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/book/120394785",
+							"raw": "http://localhost:8080/api/v1/book/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -546,7 +613,7 @@
 								"api",
 								"v1",
 								"book",
-								"120394785"
+								"1"
 							]
 						}
 					},
@@ -555,11 +622,11 @@
 				{
 					"name": "Update book",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"authors\": [\n        {\n            \"name\": \"Selindger\",\n            \"language\": \"en\"\n        }\n    ]\n}",
+							"raw": "{\n    \"keepPeriod\": 10\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,7 +634,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/book/120394785",
+							"raw": "http://localhost:8080/api/v1/book/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -577,7 +644,7 @@
 								"api",
 								"v1",
 								"book",
-								"120394785"
+								"1"
 							]
 						}
 					},
@@ -589,7 +656,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/book/120394785",
+							"raw": "http://localhost:8080/api/v1/book/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -599,7 +666,7 @@
 								"api",
 								"v1",
 								"book",
-								"120394785"
+								"1"
 							]
 						}
 					},
@@ -641,7 +708,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[{\n    \"isbn\": \"1\"\n}]",
+									"raw": "[\n    {\"isbn\": \"2\"}, \n    { \"isbn\": 1}\n]",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -692,8 +759,32 @@
 						{
 							"name": "Update book list in booking",
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\"isbn\": \"1\"}]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/booking/1/books",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"booking",
+										"1",
+										"books"
+									]
+								}
 							},
 							"response": []
 						},
@@ -753,7 +844,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 1\n}",
+							"raw": "{\n    \"user\": {\"name\": \"test@test.com\"} \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -801,17 +892,61 @@
 				{
 					"name": "Update booking",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    \"state\": \"CANCELED\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/booking/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"booking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete booking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/booking/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"booking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/api/v1/booking",
 							"protocol": "http",
@@ -827,34 +962,49 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Anctuator",
+			"item": [
 				{
-					"name": "Delete booking",
+					"name": "Anctuator",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/booking/0",
+							"raw": "http://localhost:8080/actuator/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"api",
-								"v1",
-								"booking",
-								"0"
+								"actuator",
+								""
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get all bookings",
+					"name": "Anctuator info",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
 					},
 					"response": []
 				}
