@@ -24,7 +24,8 @@ class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
                 .stream()
                 .filter(t -> keyGetter.apply(t).equals(key))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Not found!"));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Entity with key " + key + " is not found!"));
     }
 
     public List<T> getAll() {

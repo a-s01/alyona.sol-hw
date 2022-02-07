@@ -3,6 +3,7 @@ package com.epam.spring.library.service.impl;
 import com.epam.spring.library.dto.AuthorDTO;
 import com.epam.spring.library.dto.mapper.AuthorMapper;
 import com.epam.spring.library.dto.mapper.LanguageMapper;
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Author;
 import com.epam.spring.library.model.Language;
 import com.epam.spring.library.repository.AuthorRepository;
@@ -85,8 +86,8 @@ class AuthorServiceImpl implements AuthorService {
         Language lang = languageMapper.toLanguage(langCode);
 
         if (!author.getNameTranslations().containsKey(lang)) {
-            throw new RuntimeException("Author named " + name + " name translation "
-                                       + "in " + langCode + " not found!");
+            throw new EntityNotFoundException("Author named " + name + " name translation "
+                                              + "in " + langCode + " not found!");
         }
         return author.getNameTranslations().get(lang);
     }
