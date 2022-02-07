@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class UserRepositoryListImpl implements UserRepository {
+class UserRepositoryListImpl implements UserRepository {
     private final BaseRepository<User> repository;
 
     @Override

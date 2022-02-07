@@ -17,5 +17,5 @@ public class Book implements Entity {
     private String langCode;
     private int keepPeriod;
     @Builder.Default
-    private Set<Author> authors = new HashSet<>();
+    private final Set<Author> authors = new HashSet<>();
 }

@@ -1,5 +1,7 @@
 package com.epam.spring.library.repository.impl.list;
 
+import com.epam.spring.library.exception.EntityAlreadyExistsException;
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Entity;
 import com.epam.spring.library.repository.BaseRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -14,15 +16,15 @@ import java.util.stream.Collectors;
 
 @Repository
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
+class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
     private final List<T> list = new ArrayList<>();
 
     public <R> T get(R key, Function<T, R> keyGetter) {
-        return list.stream()
-                   .filter(t -> keyGetter.apply(t)
-                                         .equals(key))
-                   .findFirst()
-                   .orElseThrow(() -> new RuntimeException("Not found!"));
+        return list
+                .stream()
+                .filter(t -> keyGetter.apply(t).equals(key))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Not found!"));
     }
 
     public List<T> getAll() {
@@ -30,23 +32,23 @@ public class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
     }
 
     public <R> List<T> getAll(R key, Function<T, R> keyGetter) {
-        return list.stream()
-                   .filter(t -> keyGetter.apply(t)
-                                         .equals(key))
-                   .collect(Collectors.toList());
+        return list
+                .stream()
+                .filter(t -> keyGetter.apply(t).equals(key))
+                .collect(Collectors.toList());
     }
 
     public <R> T create(T model, Function<T, R> keyGetter) {
         final R key = keyGetter.apply(model);
-        Optional<T> existed = list.stream()
-                                  .filter(t -> keyGetter.apply(t)
-                                                        .equals(key))
-                                  .findFirst();
+        Optional<T> existed = list
+                .stream()
+                .filter(t -> keyGetter.apply(t).equals(key))
+                .findFirst();
 
         if (existed.isPresent()) {
-            throw new RuntimeException(model.getClass()
-                                            .getSimpleName() + "with " + key
-                                       + " key already exists");
+            throw new EntityAlreadyExistsException(
+                    model.getClass().getSimpleName() + "with " + key
+                    + " key already exists");
         }
 
         model.setId(list.size() + 1);
@@ -55,19 +57,21 @@ public class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
     }
 
     public <R> T update(T model, Function<T, R> keyGetter) {
-        boolean isDeleted = list.removeIf(t -> keyGetter.apply(t)
-                                                        .equals(keyGetter.apply(
-                                                                model)));
-        if (isDeleted) {
+        if (isDeleted(model, keyGetter)) {
             list.add(model);
         } else {
-            throw new RuntimeException(model.getClass().getSimpleName() + " is not found!");
+            throw new EntityNotFoundException(
+                    model.getClass().getSimpleName() + " is not found!");
         }
         return model;
     }
 
+    private <R> boolean isDeleted(T model, Function<T, R> keyGetter) {
+        return list.removeIf(
+                t -> keyGetter.apply(t).equals(keyGetter.apply(model)));
+    }
+
     public <R> void delete(R key, Function<T, R> keyGetter) {
-        list.removeIf(t -> keyGetter.apply(t)
-                                    .equals(key));
+        list.removeIf(t -> keyGetter.apply(t).equals(key));
     }
 }

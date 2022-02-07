@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class BookRepositoryListImpl implements BookRepository {
+class BookRepositoryListImpl implements BookRepository {
     private final BaseRepository<Book> repository;
 
     @Override

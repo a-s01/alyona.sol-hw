@@ -13,5 +13,5 @@ public class Author implements Entity {
     private String defaultName;
     private Language defaultLanguage;
     @Builder.Default
-    private Map<Language, String> i18Names = new HashMap<>();
+    private final Map<Language, String> nameTranslations = new HashMap<>();
 }

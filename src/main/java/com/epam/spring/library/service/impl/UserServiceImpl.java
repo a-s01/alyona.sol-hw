@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
     private final Language defaultLanguage;
@@ -27,9 +27,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserEditDTO userEditDTO) {
-        User newUser = setUserDefaults(mapper.createUser(userEditDTO));
-        User user = repository.createUser(newUser);
-        return mapper.toDTO(user);
+        return mapper.toDTO(repository.createUser(
+                setUserDefaults(mapper.createUser(userEditDTO))));
     }
 
     private User setUserDefaults(User user) {
