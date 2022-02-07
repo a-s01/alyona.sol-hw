@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class LanguageRepositoryListImpl implements LanguageRepository {
+class LanguageRepositoryListImpl implements LanguageRepository {
 
     private final List<Language> supportedLanguages;
 

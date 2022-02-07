@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
     private final Language defaultLanguage;
@@ -23,12 +23,10 @@ public class UserServiceImpl implements UserService {
         User user = repository.getUser(email);
         return mapper.toDTO(user);
     }
-
-    @Override
+    
     public UserDTO createUser(UserDTO userDTO) {
-        User newUser = setUserDefaults(mapper.toUser(userDTO));
-        User user = repository.createUser(newUser);
-        return mapper.toDTO(user);
+        return mapper.toDTO(
+                repository.createUser(setUserDefaults(mapper.toUser(userDTO))));
     }
 
     private User setUserDefaults(User user) {

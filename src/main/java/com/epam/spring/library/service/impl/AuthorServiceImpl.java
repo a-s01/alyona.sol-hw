@@ -3,6 +3,7 @@ package com.epam.spring.library.service.impl;
 import com.epam.spring.library.dto.AuthorDTO;
 import com.epam.spring.library.dto.mapper.AuthorMapper;
 import com.epam.spring.library.dto.mapper.LanguageMapper;
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Author;
 import com.epam.spring.library.model.Language;
 import com.epam.spring.library.repository.AuthorRepository;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorServiceImpl implements AuthorService {
+class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository repository;
     private final AuthorMapper mapper;
     private final LanguageMapper languageMapper;
@@ -51,7 +52,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Map<String, String> getAllAuthorNameTranslations(String name) {
         Author author = repository.getAuthor(name);
-        return languageMapper.toDTO(author.getI18Names());
+        return languageMapper.toDTO(author.getNameTranslations());
     }
 
     @Override
@@ -61,14 +62,13 @@ public class AuthorServiceImpl implements AuthorService {
 
         Author author = repository.getAuthor(name);
         Language lang = languageMapper.toLanguage(langCode);
-        author.getI18Names().put(lang, nameTranslation);
-        return languageMapper.toDTO(author.getI18Names());
+        author.getNameTranslations().put(lang, nameTranslation);
+        return languageMapper.toDTO(author.getNameTranslations());
     }
 
     @Override
     public void clearAuthorNameTranslationsList(String name) {
-        Author author = repository.getAuthor(name);
-        author.getI18Names().clear();
+        repository.getAuthor(name).getNameTranslations().clear();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class AuthorServiceImpl implements AuthorService {
                                                       String langCode) {
         Author author = repository.getAuthor(name);
         Language lang = languageMapper.toLanguage(langCode);
-        author.getI18Names().remove(lang);
+        author.getNameTranslations().remove(lang);
     }
 
     @Override
@@ -85,10 +85,10 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = repository.getAuthor(name);
         Language lang = languageMapper.toLanguage(langCode);
 
-        if (!author.getI18Names().containsKey(lang)) {
-            throw new RuntimeException("Author named " + name + " name translation "
-                                       + "in " + langCode + " not found!");
+        if (!author.getNameTranslations().containsKey(lang)) {
+            throw new EntityNotFoundException("Author named " + name + " name translation "
+                                              + "in " + langCode + " not found!");
         }
-        return author.getI18Names().get(lang);
+        return author.getNameTranslations().get(lang);
     }
 }

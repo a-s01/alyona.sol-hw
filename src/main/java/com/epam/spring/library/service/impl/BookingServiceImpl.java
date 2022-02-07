@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BookingServiceImpl implements BookingService {
+class BookingServiceImpl implements BookingService {
     private final BookingRepository repository;
     private final BookRepository bookRepository;
     private final BookingMapper mapper;
@@ -35,8 +35,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO createBooking(BookingDTO bookingDTO) {
-        Booking newBooking = mapper.toBooking(bookingDTO);
-        return mapper.toDTO(repository.createBooking(newBooking));
+        return mapper.toDTO(
+                repository.createBooking(mapper.toBooking(bookingDTO)));
     }
 
     @Override
@@ -53,10 +53,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookDTO> addBookToBooking(int id, List<BookDTO> bookDTOs) {
-        List<Book> books = bookDTOs.stream()
-                                   .map(BookDTO::getIsbn)
-                                   .map(bookRepository::getBook)
-                                   .collect(Collectors.toList());
+        List<Book> books = bookDTOs
+                .stream()
+                .map(BookDTO::getIsbn)
+                .map(bookRepository::getBook)
+                .collect(Collectors.toList());
         Booking booking = repository.getBooking(id);
         booking.getBooks().addAll(books);
         repository.updateBooking(booking);
@@ -65,25 +66,25 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void deleteBookFromBooking(int id, String isbn) {
-        Book book = bookRepository.getBook(isbn);
         Booking booking = repository.getBooking(id);
-        booking.getBooks().remove(book);
+        booking.getBooks().remove(bookRepository.getBook(isbn));
         repository.updateBooking(booking);
     }
 
     @Override
     public List<BookDTO> getBooksInBooking(int id) {
-        Booking booking = repository.getBooking(id);
-        return bookMapper.toDTO(booking.getBooks());
+        return bookMapper.toDTO(repository.getBooking(id).getBooks());
     }
 
     @Override
-    public List<BookDTO> updateBooksListInBooking(int id, List<BookDTO> bookDTOs) {
+    public List<BookDTO> updateBooksListInBooking(int id,
+                                                  List<BookDTO> bookDTOs) {
         Booking booking = repository.getBooking(id);
-        List<Book> newBookList = bookDTOs.stream()
-                                         .map(BookDTO::getIsbn)
-                                         .map(bookRepository::getBook)
-                                         .collect(Collectors.toList());
+        List<Book> newBookList = bookDTOs
+                .stream()
+                .map(BookDTO::getIsbn)
+                .map(bookRepository::getBook)
+                .collect(Collectors.toList());
         booking.getBooks().clear();
         booking.getBooks().addAll(newBookList);
         return bookMapper.toDTO(newBookList);
@@ -91,7 +92,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void clearBookListInBooking(int id) {
-        Booking booking = repository.getBooking(id);
-        booking.getBooks().clear();
+        repository.getBooking(id).getBooks().clear();
     }
 }

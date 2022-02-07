@@ -16,7 +16,7 @@ public class LanguageMapperImpl implements LanguageMapper {
 
     @Override
     public Language toLanguage(String code) {
-        if (code == null) {
+        if (Objects.isNull(code)) {
             return null;
         }
 
@@ -35,7 +35,7 @@ public class LanguageMapperImpl implements LanguageMapper {
     @Override
     public List<String> toDTO(List<Language> languages) {
         if (Objects.isNull(languages)) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         return languages.stream()
@@ -46,7 +46,7 @@ public class LanguageMapperImpl implements LanguageMapper {
     @Override
     public Map<String, String> toDTO(Map<Language, String> map) {
         if (Objects.isNull(map)) {
-            return new HashMap<>();
+            return Collections.emptyMap();
         }
 
         Map<String, String> result = new HashMap<>();
