@@ -8,6 +8,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.ISBN;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
@@ -29,6 +30,7 @@ public class BookDTO {
     @JsonAlias("language")
     @NotBlank(message = "{book.language.empty}")
     private String langCode;
-    // TODO write custom validation for this
-    private int keepPeriod;
+
+    @Positive(message = "{book.keep.period.invalid}")
+    private Integer keepPeriod;
 }

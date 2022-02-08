@@ -2,6 +2,7 @@ package com.epam.spring.library.dto;
 
 import com.epam.spring.library.dto.group.OnCreate;
 import com.epam.spring.library.dto.group.OnUpdate;
+import com.epam.spring.library.validation.FieldsValueMatch;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -20,6 +21,12 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 @Builder
 @ToString(exclude = {"password", "confirmPassword"})
 @JsonInclude(NON_ABSENT)
+@FieldsValueMatch(
+        field = "password",
+        otherField = "confirmPassword",
+        groups = OnCreate.class
+        //message = "{passwords.does.not.match}"
+)
 public class UserDTO {
     @JsonProperty(access = READ_ONLY)
     private int id;
