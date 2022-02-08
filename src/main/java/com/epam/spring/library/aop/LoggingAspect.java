@@ -16,7 +16,7 @@ public class LoggingAspect {
     @Pointcut("execution(public * *(..))")
     private void anyPublicMethod() {}
 
-    @Pointcut("within(com.epam.spring.library.controller..*)")
+    @Pointcut("within(com.epam.spring.library.controller.*)")
     private void inControllerLayer() {}
 
     @Pointcut("within(com.epam.spring.library.service..*)")
@@ -28,31 +28,38 @@ public class LoggingAspect {
     @Pointcut("within(com.epam.spring.library.config..*)")
     private void inConfig() {}
 
-    @Pointcut("execution(* com.epam.spring.library.repository.BaseRepository.*(..))")
+    @Pointcut("execution(* com.epam.spring.library.repository.BaseRepository"
+              + ".*(..))")
     private void lowLevelRepositoryImpl() {}
 
-    @Before("anyPublicMethod() && (inControllerLayer() || inServiceLayer() ||"
-            + " (inDataLayer() && !lowLevelRepositoryImpl()))")
+    @Pointcut("("
+              + "inControllerLayer()"
+              + " || inServiceLayer()"
+              + " || (inDataLayer() && !lowLevelRepositoryImpl())"
+              + " && anyPublicMethod()" + ")")
+    private void controllerServiceAndDataLayer() {}
+
+    @Before("controllerServiceAndDataLayer()")
     public void logStart(JoinPoint joinPoint) {
         log.info("{} with args({}) started",
-                 joinPoint.getSignature().toShortString(),
-                 joinPoint.getArgs());
+                 joinPoint.getSignature().toShortString(), joinPoint.getArgs());
     }
 
-    @After("anyPublicMethod() && (inControllerLayer() || inServiceLayer() "
-           + "|| (inDataLayer() && !lowLevelRepositoryImpl()))")
+    @After("controllerServiceAndDataLayer()")
     public void logEnd(JoinPoint joinPoint) {
         log.info("finish {} with args({})",
-                 joinPoint.getSignature().toShortString(),
-                 joinPoint.getArgs());
+                 joinPoint.getSignature().toShortString(), joinPoint.getArgs());
     }
 
-    @Before("anyPublicMethod() && inConfig()")
+    @Pointcut("inConfig() && anyPublicMethod()")
+    private void anyPublicMethodInConfig() {}
+
+    @Before("anyPublicMethodInConfig()")
     public void logInitBean(JoinPoint joinPoint) {
         log.info("init bean {}", joinPoint.getSignature().getName());
     }
 
-    @After("anyPublicMethod() && inConfig()")
+    @After("anyPublicMethodInConfig()")
     public void logFinishInitBean(JoinPoint joinPoint) {
         log.info("success: bean {} was created",
                  joinPoint.getSignature().getName());
