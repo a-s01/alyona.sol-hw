@@ -13,33 +13,23 @@ import org.springframework.context.annotation.*;
 @ComponentScan(basePackageClasses = BeanA.class)
 public class Config {
 
-    @Value("${beanB.name}")
-    private String beanBName;
-    @Value("${beanB.value}")
-    private int beanBValue;
-    @Value("${beanC.name}")
-    private String beanCName;
-    @Value("${beanC.value}")
-    private int beanCValue;
-    @Value("${beanD.name}")
-    private String beanDName;
-    @Value("${beanD.value}")
-    private int beanDValue;
-
     @Bean(initMethod = "initD", destroyMethod = "destroyD")
-    public BeanD beanD() {
+    public BeanD beanD(@Value("${beanD.name}") String beanDName,
+                       @Value("${beanD.value}") int beanDValue) {
         return new BeanD(beanDName, beanDValue);
     }
 
     @Bean(initMethod = "initB", destroyMethod = "destroyB")
     @DependsOn("beanD")
-    public BeanB beanB() {
+    public BeanB beanB(@Value("${beanB.name}") String beanBName,
+                       @Value("${beanB.value}") int beanBValue) {
         return new BeanB(beanBName, beanBValue);
     }
 
     @Bean(initMethod = "initC", destroyMethod = "destroyC")
     @DependsOn("beanB")
-    public BeanC beanC() {
+    public BeanC beanC(@Value("${beanC.name}") String beanCName,
+                       @Value("${beanC.value}") int beanCValue) {
         return new BeanC(beanCName, beanCValue);
     }
 }
