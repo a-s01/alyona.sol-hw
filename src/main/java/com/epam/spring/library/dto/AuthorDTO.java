@@ -18,10 +18,10 @@ public class AuthorDTO {
     private int id;
 
     @JsonAlias("name")
-    @NotBlank(message = "Author name must be not blank")
+    @NotBlank(message = "{author.name.empty}")
     private String defaultName;
 
     @JsonAlias("language")
-    @NotBlank(message = "Default language must be not blank")
+    @NotBlank(message = "{author.language.empty}")
     private String defaultLanguage;
 }

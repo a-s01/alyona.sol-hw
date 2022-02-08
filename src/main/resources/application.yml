@@ -5,6 +5,8 @@ config:
       - "ua"
       - "en"
   keepPeriod: 14
+  messageFile: "messages"
+
 spring:
   profiles:
     active: "dev"

@@ -19,9 +19,9 @@ public class BookingDTO {
     @JsonProperty(access = READ_ONLY)
     private int id;
 
-    @NotNull(message = "Booking owner/user cannot be blank",
+    @NotNull(message = "{booking.user.empty}",
              groups = OnCreate.class)
-    @Null(message = "Booking user cannot be changed", groups = OnUpdate.class)
+    @Null(message = "{booking.user.read.only}", groups = OnUpdate.class)
     private UserDTO user;
     private String state;
     private String located;

@@ -25,20 +25,20 @@ public class UserDTO {
     private int id;
 
     @Email(groups = {OnUpdate.class, OnCreate.class})
-    @NotBlank(message = "User email must be not blank", groups = OnCreate.class)
-    @Pattern(regexp = "\\S", message = "User email must be not blank",
+    @NotBlank(message = "{user.email.empty}", groups = OnCreate.class)
+    @Pattern(regexp = "\\S", message = "{user.email.empty}",
              groups = OnUpdate.class)
     private String email;
 
-    @NotBlank(message = "User password must be not blank",
+    @NotBlank(message = "{user.password.empty}",
               groups = OnCreate.class)
-    @Null(message = "Use special method for updating password",
+    @Null(message = "{user.password.update.forbidden}",
           groups = OnUpdate.class)
     private String password;
 
-    @NotBlank(message = "Confirm password must be not blank",
+    @NotBlank(message = "{user.password.confirm.empty}",
               groups = OnCreate.class)
-    @Null(message = "Use special method for updating password",
+    @Null(message = "{user.password.update.forbidden}",
           groups = OnUpdate.class)
     private String confirmPassword;
     private String role;
@@ -46,9 +46,9 @@ public class UserDTO {
     private @Null(groups = {OnUpdate.class, OnCreate.class}) Double fine;
     private String name;
 
-    @NotBlank(message = "User preferred language must be not blank",
+    @NotBlank(message = "{user.language.empty}",
               groups = OnCreate.class)
-    @Pattern(regexp = "\\S", message = "User preferred language must be not blank",
+    @Pattern(regexp = "\\S", message = "{user.language.empty}",
              groups = OnUpdate.class)
     private String preferredLanguage;
 

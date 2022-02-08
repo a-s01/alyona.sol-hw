@@ -16,10 +16,10 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 public class BookDTO {
     @JsonProperty(access = READ_ONLY)
     private int id;
-    @NotBlank(message = "Book title must be not blank")
+    @NotBlank(message = "{book.title.empty}")
     private String title;
 
-    @NotBlank(message = "Book ISBN must be not blank")
+    @NotBlank(message = "{book.isbn.empty}")
     @ISBN
     private String isbn;
 
@@ -27,7 +27,7 @@ public class BookDTO {
     private int year;
 
     @JsonAlias("language")
-    @NotBlank(message = "Book language must be not blank")
+    @NotBlank(message = "{book.language.empty}")
     private String langCode;
     // TODO write custom validation for this
     private int keepPeriod;

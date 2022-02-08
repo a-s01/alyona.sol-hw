@@ -10,9 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PublicationYear {
 
-    String message() default "Book publication year must be in range ["
-                             + PublicationYearValidator.FIRST_PRINTED_BOOK_YEAR
-                             + ", current year]";
+    String message() default "{book.publication.year.invalid}";
 
     Class<?>[] groups() default {};
 
