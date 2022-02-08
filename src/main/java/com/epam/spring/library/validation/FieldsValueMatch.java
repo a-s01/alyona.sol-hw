@@ -6,6 +6,9 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
+/**
+ * Class fields with names 'field' and 'otherField' must match
+ */
 @Documented
 @Constraint(validatedBy = FieldsValueMatchValidator.class)
 @Target(ElementType.TYPE)
@@ -13,7 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FieldsValueMatch {
 
-    String message() default "{fields.does.not.match}";
+    String message() default "{fields.do.not.match}";
 
     String field();
 

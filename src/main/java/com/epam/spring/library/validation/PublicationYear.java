@@ -14,6 +14,10 @@ public @interface PublicationYear {
 
     String message() default "{book.publication.year.invalid}";
 
+    /**
+     * The default value is the first printed book publish year according to
+     * wikipedia - https://en.wikipedia.org/wiki/History_of_books
+     */
     int beginIncluding() default 868;
 
     Class<?>[] groups() default {};

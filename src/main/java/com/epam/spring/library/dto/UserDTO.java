@@ -2,6 +2,8 @@ package com.epam.spring.library.dto;
 
 import com.epam.spring.library.dto.group.OnCreate;
 import com.epam.spring.library.dto.group.OnUpdate;
+import com.epam.spring.library.model.User;
+import com.epam.spring.library.validation.EnumValue;
 import com.epam.spring.library.validation.FieldsValueMatch;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -48,9 +50,17 @@ public class UserDTO {
     @Null(message = "{user.password.update.forbidden}",
           groups = OnUpdate.class)
     private String confirmPassword;
+
+    @EnumValue(of = User.Role.class,
+               groups = {OnCreate.class, OnUpdate.class})
     private String role;
+
+    @EnumValue(of = User.Role.class,
+               groups = {OnCreate.class, OnUpdate.class})
     private String state;
-    private @Null(groups = {OnUpdate.class, OnCreate.class}) Double fine;
+
+    @Null(groups = {OnUpdate.class, OnCreate.class})
+    private Double fine;
     private String name;
 
     @NotBlank(message = "{user.language.empty}",
