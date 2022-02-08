@@ -13,20 +13,20 @@ import org.springframework.context.annotation.*;
 @ComponentScan(basePackageClasses = BeanA.class)
 public class Config {
 
-    @Bean(initMethod = "initD", destroyMethod = "destroyD")
+    @Bean(initMethod = "init", destroyMethod = "destroy")
     public BeanD beanD(@Value("${beanD.name}") String beanDName,
                        @Value("${beanD.value}") int beanDValue) {
         return new BeanD(beanDName, beanDValue);
     }
 
-    @Bean(initMethod = "initB", destroyMethod = "destroyB")
+    @Bean(initMethod = "init", destroyMethod = "destroy")
     @DependsOn("beanD")
     public BeanB beanB(@Value("${beanB.name}") String beanBName,
                        @Value("${beanB.value}") int beanBValue) {
         return new BeanB(beanBName, beanBValue);
     }
 
-    @Bean(initMethod = "initC", destroyMethod = "destroyC")
+    @Bean(initMethod = "init", destroyMethod = "destroy")
     @DependsOn("beanB")
     public BeanC beanC(@Value("${beanC.name}") String beanCName,
                        @Value("${beanC.value}") int beanCValue) {

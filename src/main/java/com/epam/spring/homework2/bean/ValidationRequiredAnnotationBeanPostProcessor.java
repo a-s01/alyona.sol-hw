@@ -7,6 +7,7 @@ import com.epam.spring.homework2.validation.annotation.ValidationRequired;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -14,34 +15,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * NOTE: Implementing some ValidationRequired interface with getters in beans would be more lightweight and easy, but
- * I did more abstract solution with annotation post processor for educational purpose
+ * NOTE: Implementing some ValidationRequired interface with getters in beans
+ * would be more lightweight and easy, but
+ * I did more abstract solution with annotation post processor for
+ * educational purpose
  */
 @Component
-public class ValidationRequiredAnnotationBeanPostProcessor implements BeanPostProcessor {
+public class ValidationRequiredAnnotationBeanPostProcessor
+        implements BeanPostProcessor {
     /**
-     * Validation place is after all init methods, so postProcessAfterInitialization method will do it, and
-     * postProcessAfterInitialization will save for it all beans required validation.
+     * Validation place is after all init methods, so
+     * postProcessAfterInitialization method will do it, and
+     * postProcessAfterInitialization will save for it all beans required
+     * validation.
      */
-    private final Map<String, Map<Field, Validator>> beansToValidate = new HashMap<>();
+    private final Map<String, Map<Field, Validator>> beansToValidate =
+            new HashMap<>();
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) {
-        ValidationRequired beanValidationRequired = bean.getClass().getAnnotation(ValidationRequired.class);
+    public Object postProcessBeforeInitialization(Object bean,
+                                                  String beanName) {
+        ValidationRequired beanValidationRequired =
+                bean.getClass().getAnnotation(ValidationRequired.class);
 
         if (beanValidationRequired != null) {
             Map<Field, Validator> fieldValidatorMap = new HashMap<>();
 
-            for (Field field : bean.getClass().getDeclaredFields()) {
+            ReflectionUtils.doWithFields(bean.getClass(), field -> {
                 for (Annotation annotation : field.getAnnotations()) {
-                    ValidationRequired validationRequired = annotation.annotationType()
-                            .getDeclaredAnnotation(ValidationRequired.class);
+                    ValidationRequired validationRequired =
+                            annotation.annotationType()
+                                      .getDeclaredAnnotation(
+                                              ValidationRequired.class);
 
                     if (validationRequired != null) {
-                        fieldValidatorMap.put(field, ValidatorFactory.getValidator(annotation));
+                        fieldValidatorMap.put(field,
+                                              ValidatorFactory.getValidator(
+                                                      annotation));
                     }
                 }
-            }
+            });
             beansToValidate.put(beanName, fieldValidatorMap);
         }
 
@@ -49,14 +62,22 @@ public class ValidationRequiredAnnotationBeanPostProcessor implements BeanPostPr
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName)
+            throws BeansException {
         if (beansToValidate.containsKey(beanName)) {
-            for (Map.Entry<Field, Validator> fieldValidatorEntry : beansToValidate.get(beanName).entrySet()) {
+            for (Map.Entry<Field, Validator> fieldValidatorEntry :
+                    beansToValidate.get(
+                    beanName).entrySet()) {
                 try {
                     Field field = fieldValidatorEntry.getKey();
                     fieldValidatorEntry.getValue().validate(field, bean);
+                    System.out.println(
+                            this.getClass().getSimpleName() + ": " + beanName
+                            + "@" + field.getName()
+                            + " passed the validation");
                 } catch (ValidationException e) {
-                    System.out.println(this.getClass().getSimpleName() + ": " + e.getMessage());
+                    System.out.println(this.getClass().getSimpleName() + ": "
+                                       + e.getMessage());
                 }
             }
         }
