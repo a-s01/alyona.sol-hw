@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.HandlerMethod;
 
+import javax.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,18 @@ public class ErrorHandler {
         return ex.getAllErrors()
                  .stream()
                  .map(e -> getErrorDTO(e.getDefaultMessage(), VALIDATION_ERROR))
+                 .collect(Collectors.toList());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<ErrorDTO> handleMethodArgumentNotValidException(
+            ConstraintViolationException ex,
+            HandlerMethod hm) {
+        log(ex, hm);
+        return ex.getConstraintViolations()
+                 .stream()
+                 .map(e -> getErrorDTO(e.getMessage(), VALIDATION_ERROR))
                  .collect(Collectors.toList());
     }
 
@@ -77,8 +90,8 @@ public class ErrorHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorDTO handleException(Exception ex, HandlerMethod hm) {
-        log(ex, hm);
+    public ErrorDTO handleException(Exception ex) {
+        log.error("", ex);
         return getErrorDTO(ex.getMessage(), FATAL_ERROR);
     }
 

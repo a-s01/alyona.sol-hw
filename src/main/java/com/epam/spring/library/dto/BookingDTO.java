@@ -4,7 +4,7 @@ import com.epam.spring.library.dto.group.OnCreate;
 import com.epam.spring.library.dto.group.OnUpdate;
 import com.epam.spring.library.model.Booking.Place;
 import com.epam.spring.library.model.Booking.State;
-import com.epam.spring.library.validation.constrain.EnumValue;
+import com.epam.spring.library.validation.constraint.EnumValue;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

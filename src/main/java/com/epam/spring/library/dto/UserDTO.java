@@ -3,8 +3,8 @@ package com.epam.spring.library.dto;
 import com.epam.spring.library.dto.group.OnCreate;
 import com.epam.spring.library.dto.group.OnUpdate;
 import com.epam.spring.library.model.User;
-import com.epam.spring.library.validation.EnumValue;
-import com.epam.spring.library.validation.FieldsValueMatch;
+import com.epam.spring.library.validation.constraint.EnumValue;
+import com.epam.spring.library.validation.constraint.FieldsValueMatch;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -23,12 +23,10 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 @Builder
 @ToString(exclude = {"password", "confirmPassword"})
 @JsonInclude(NON_ABSENT)
-@FieldsValueMatch(
-        field = "password",
-        otherField = "confirmPassword",
-        groups = OnCreate.class
-        //message = "{passwords.does.not.match}"
-)
+@FieldsValueMatch(field = "password", otherField = "confirmPassword",
+                  groups = OnCreate.class
+                  //message = "{passwords.does.not.match}"
+                  )
 public class UserDTO {
     @JsonProperty(access = READ_ONLY)
     private int id;
@@ -39,32 +37,26 @@ public class UserDTO {
              groups = OnUpdate.class)
     private String email;
 
-    @NotBlank(message = "{user.password.empty}",
-              groups = OnCreate.class)
-    @Null(message = "{user.password.update.forbidden}",
-          groups = OnUpdate.class)
+    @NotBlank(message = "{user.password.empty}", groups = OnCreate.class)
+    @Null(message = "{user.password.update.forbidden}", groups = OnUpdate.class)
     private String password;
 
     @NotBlank(message = "{user.password.confirm.empty}",
               groups = OnCreate.class)
-    @Null(message = "{user.password.update.forbidden}",
-          groups = OnUpdate.class)
+    @Null(message = "{user.password.update.forbidden}", groups = OnUpdate.class)
     private String confirmPassword;
 
-    @EnumValue(of = User.Role.class,
-               groups = {OnCreate.class, OnUpdate.class})
+    @EnumValue(of = User.Role.class, groups = {OnCreate.class, OnUpdate.class})
     private String role;
 
-    @EnumValue(of = User.Role.class,
-               groups = {OnCreate.class, OnUpdate.class})
+    @EnumValue(of = User.Role.class, groups = {OnCreate.class, OnUpdate.class})
     private String state;
 
     @Null(groups = {OnUpdate.class, OnCreate.class})
     private Double fine;
     private String name;
 
-    @NotBlank(message = "{user.language.empty}",
-              groups = OnCreate.class)
+    @NotBlank(message = "{user.language.empty}", groups = OnCreate.class)
     @Pattern(regexp = "\\S", message = "{user.language.empty}",
              groups = OnUpdate.class)
     private String preferredLanguage;

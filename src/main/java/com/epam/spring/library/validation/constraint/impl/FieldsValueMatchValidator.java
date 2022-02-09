@@ -1,6 +1,6 @@
-package com.epam.spring.library.validation.constrain.impl;
+package com.epam.spring.library.validation.constraint.impl;
 
-import com.epam.spring.library.validation.constrain.FieldsValueMatch;
+import com.epam.spring.library.validation.constraint.FieldsValueMatch;
 import org.springframework.beans.BeanWrapperImpl;
 
 import javax.validation.ConstraintValidator;

@@ -1,6 +1,6 @@
-package com.epam.spring.library.validation.constrain.impl;
+package com.epam.spring.library.validation.constraint.impl;
 
-import com.epam.spring.library.validation.constrain.PublicationYear;
+import com.epam.spring.library.validation.constraint.PublicationYear;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
