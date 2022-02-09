@@ -1,6 +1,6 @@
-package com.epam.spring.library.validation;
+package com.epam.spring.library.validation.constrain;
 
-import com.epam.spring.library.validation.impl.EnumValueValidator;
+import com.epam.spring.library.validation.constrain.impl.EnumValueValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

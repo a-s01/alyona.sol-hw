@@ -9,6 +9,7 @@ import com.epam.spring.library.model.Booking;
 import com.epam.spring.library.repository.BookRepository;
 import com.epam.spring.library.repository.BookingRepository;
 import com.epam.spring.library.service.BookingService;
+import com.epam.spring.library.validation.service.BookingValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ class BookingServiceImpl implements BookingService {
     private final BookRepository bookRepository;
     private final BookingMapper mapper;
     private final BookMapper bookMapper;
+    private final BookingValidationService validator;
 
     @Override
     public BookingDTO getBooking(int id) {
@@ -42,23 +44,20 @@ class BookingServiceImpl implements BookingService {
     @Override
     public BookingDTO updateBooking(int id, BookingDTO bookingDTO) {
         Booking toUpdate = repository.getBooking(id);
+        validator.validateUpdate(toUpdate, bookingDTO);
         mapper.updateBooking(bookingDTO, toUpdate);
         return mapper.toDTO(repository.updateBooking(toUpdate));
     }
 
     @Override
-    public void deleteBooking(int id) {
-        repository.deleteBooking(id);
-    }
-
-    @Override
     public List<BookDTO> addBookToBooking(int id, List<BookDTO> bookDTOs) {
+        Booking booking = repository.getBooking(id);
+        validator.validateBookListChanges(booking);
         List<Book> books = bookDTOs
                 .stream()
                 .map(BookDTO::getIsbn)
                 .map(bookRepository::getBook)
                 .collect(Collectors.toList());
-        Booking booking = repository.getBooking(id);
         booking.getBooks().addAll(books);
         repository.updateBooking(booking);
         return bookMapper.toDTO(books);
@@ -67,6 +66,7 @@ class BookingServiceImpl implements BookingService {
     @Override
     public void deleteBookFromBooking(int id, String isbn) {
         Booking booking = repository.getBooking(id);
+        validator.validateBookListChanges(booking);
         booking.getBooks().remove(bookRepository.getBook(isbn));
         repository.updateBooking(booking);
     }
@@ -80,6 +80,7 @@ class BookingServiceImpl implements BookingService {
     public List<BookDTO> updateBooksListInBooking(int id,
                                                   List<BookDTO> bookDTOs) {
         Booking booking = repository.getBooking(id);
+        validator.validateBookListChanges(booking);
         List<Book> newBookList = bookDTOs
                 .stream()
                 .map(BookDTO::getIsbn)
@@ -92,6 +93,7 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public void clearBookListInBooking(int id) {
+        validator.validateBookListChanges(repository.getBooking(id));
         repository.getBooking(id).getBooks().clear();
     }
 }

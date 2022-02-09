@@ -1,6 +1,6 @@
 package com.epam.spring.library.dto;
 
-import com.epam.spring.library.validation.PublicationYear;
+import com.epam.spring.library.validation.constrain.PublicationYear;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

@@ -37,10 +37,6 @@ public interface BookingAPI {
                              @RequestBody @Validated(OnUpdate.class)
                                      BookingDTO bookingDTO);
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteBooking(@PathVariable @Positive int id);
-
     @GetMapping("/{id}/books")
     @ResponseStatus(HttpStatus.OK)
     List<BookDTO> getBooksInBooking(@PathVariable @Positive int id);

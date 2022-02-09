@@ -31,14 +31,8 @@ public class BookingController implements BookingAPI {
     }
 
     @Override
-    // TODO: add status and place validation here
     public BookingDTO updateBooking(int id, BookingDTO bookingDTO) {
         return service.updateBooking(id, bookingDTO);
-    }
-
-    @Override
-    public void deleteBooking(int id) {
-        service.deleteBooking(id);
     }
 
     @Override
