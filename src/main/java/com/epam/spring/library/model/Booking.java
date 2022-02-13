@@ -1,5 +1,6 @@
 package com.epam.spring.library.model;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,10 +20,10 @@ public class Booking implements Entity {
     private List<Book> books = new ArrayList<>();
 
     public enum State {
-        UNKNOWN, NEW, BOOKED, DELIVERED, DONE, CANCELED
+        @Hidden UNKNOWN, NEW, BOOKED, DELIVERED, DONE, CANCELED
     }
 
     public enum Place {
-        UNKNOWN, LIBRARY, USER
+        @Hidden UNKNOWN, LIBRARY, USER
     }
 }

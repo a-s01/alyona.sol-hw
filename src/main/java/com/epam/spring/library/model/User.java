@@ -1,5 +1,6 @@
 package com.epam.spring.library.model;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -27,14 +28,14 @@ public class User implements Entity {
      * User roles used in authorization
      */
     public enum Role {
-        UNKNOWN, USER, LIBRARIAN, ADMIN
+        @Hidden UNKNOWN, USER, LIBRARIAN, ADMIN
     }
 
     /**
      * User states
      */
     public enum State {
-        UNKNOWN, VALID, BLOCKED, DELETED
+        @Hidden UNKNOWN, VALID, BLOCKED, @Hidden DELETED
     }
 
     /**
