@@ -7,6 +7,7 @@ import com.epam.spring.library.exception.ErrorType;
 import com.epam.spring.library.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,8 +19,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.epam.spring.library.exception.ErrorType.FATAL_ERROR;
-import static com.epam.spring.library.exception.ErrorType.VALIDATION_ERROR;
+import static com.epam.spring.library.exception.ErrorType.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -47,6 +47,16 @@ public class ErrorHandler {
                  .stream()
                  .map(e -> getErrorDTO(e.getMessage(), VALIDATION_ERROR))
                  .collect(Collectors.toList());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDTO handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException ex,
+            HandlerMethod hm) {
+        log(ex, hm);
+        return getErrorDTO(ex.getMostSpecificCause().getLocalizedMessage(),
+                           PROCESSING_ERROR);
     }
 
     private ErrorDTO getErrorDTO(String msg, ErrorType errorType) {
