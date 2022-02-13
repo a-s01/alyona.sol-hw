@@ -1,3 +1,4 @@
+# http://localhost:8080/swagger-ui/index.html - swagger ui link
 config:
   primary-language: "en"
   languages:
@@ -10,12 +11,10 @@ config:
 spring:
   profiles:
     active: "dev"
-  # required for Swagger 3.0.0 working along Spring Boot Actuator
-  mvc:
-    pathmatch:
-      matching-strategy: "ANT_PATH_MATCHER"
 
 management:
+  server:
+    port: 9090 #required for actuator & swagger-ui working along
   endpoints:
     web:
       exposure:
@@ -26,3 +25,7 @@ management:
   info:
     java:
       enabled: "true"
+
+springdoc:
+  swagger-ui:
+    tagsSorter: "alpha" #For sorting tags alphabetically

@@ -7,6 +7,7 @@ import com.epam.spring.library.model.Booking.State;
 import com.epam.spring.library.validation.constraint.EnumValue;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Null;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_ABSENT;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
+@Schema(title = "Booking schema")
 @Data
 @Builder
 @Validated
@@ -29,9 +31,15 @@ public class BookingDTO {
     @Null(message = "{booking.user.read.only}", groups = OnUpdate.class)
     private UserDTO user;
 
+    @Schema(allowableValues = {"NEW",
+                               "BOOKED",
+                               "CANCELED",
+                               "DELIVERED",
+                               "DONE"})
     @EnumValue(of = State.class, groups = {OnCreate.class, OnUpdate.class})
     private String state;
 
+    @Schema(allowableValues = {"LIBRARY", "USER"})
     @EnumValue(of = Place.class, groups = {OnCreate.class, OnUpdate.class})
     private String located;
 }

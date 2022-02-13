@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,35 +36,5 @@ public class AuthorController implements AuthorAPI {
     @Override
     public void deleteAuthor(String name) {
         service.deleteAuthor(name);
-    }
-
-    @Override
-    public Map<String, String> getAllAuthorNameTranslations(String name) {
-        return service.getAllAuthorNameTranslations(name);
-    }
-
-    @Override
-    public String getAuthorNameTranslationByLangCode(String name,
-                                                     String langCode) {
-        return service.getAuthorNameTranslationByLangCode(name, langCode);
-    }
-
-    @Override
-    public Map<String, String> updateAuthorNameTranslation(String name,
-                                                           String langCode,
-                                                           String nameTranslation) {
-        return service.updateAuthorNameTranslation(name, langCode,
-                                                   nameTranslation);
-    }
-
-    @Override
-    public void clearAuthorNameTranslationsList(String name) {
-        service.clearAuthorNameTranslationsList(name);
-    }
-
-    @Override
-    public void deleteAuthorNameTranslationByLangCode(String name,
-                                                      String langCode) {
-        service.deleteAuthorNameTranslationByLangCode(name, langCode);
     }
 }
