@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Implements basic logic of EnumValueValidator
  */
-public class CommonEnumValueValidator {
+class CommonEnumValueValidator {
     private Class<? extends Enum> targetEnum;
     private boolean allowNull;
 
