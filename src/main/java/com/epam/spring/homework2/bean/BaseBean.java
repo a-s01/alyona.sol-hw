@@ -3,7 +3,7 @@ package com.epam.spring.homework2.bean;
 import com.epam.spring.homework2.validation.annotation.IsInRange;
 import com.epam.spring.homework2.validation.annotation.IsNotNull;
 
-public abstract class BaseBean {
+class BaseBean {
     @IsNotNull
     private final String name;
 
