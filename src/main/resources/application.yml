@@ -7,6 +7,8 @@ config:
       - "en"
   keepPeriod: 14
   messageFile: "messages"
+  password:
+    pepper: "${GLOBAL_PEPPER}"
 
 spring:
   profiles:

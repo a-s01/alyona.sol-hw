@@ -5,6 +5,7 @@ import com.epam.spring.library.dto.mapper.UserMapper;
 import com.epam.spring.library.model.Language;
 import com.epam.spring.library.model.User;
 import com.epam.spring.library.repository.UserRepository;
+import com.epam.spring.library.service.PasswordService;
 import com.epam.spring.library.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
     private final Language defaultLanguage;
+    private final PasswordService passwordService;
 
     @Override
     public UserDTO getUser(String email) {
@@ -34,6 +36,9 @@ class UserServiceImpl implements UserService {
             user.setPreferredLanguage(defaultLanguage);
         }
 
+        user.setSalt(passwordService.generateSalt());
+        user.setPassword(
+                passwordService.hash(user.getPassword(), user.getSalt()));
         return user;
     }
 
