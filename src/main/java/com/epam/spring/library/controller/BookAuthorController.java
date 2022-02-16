@@ -2,7 +2,7 @@ package com.epam.spring.library.controller;
 
 import com.epam.spring.library.api.BookAuthorAPI;
 import com.epam.spring.library.dto.AuthorDTO;
-import com.epam.spring.library.service.BookService;
+import com.epam.spring.library.service.BookAuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +12,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 public class BookAuthorController implements BookAuthorAPI {
-    private final BookService service;
+    private final BookAuthorService service;
 
     @Override
     public Set<AuthorDTO> getBookAuthors(String isbn) {

@@ -3,7 +3,7 @@ package com.epam.spring.library.service.impl;
 import com.epam.spring.library.exception.ServiceException;
 import com.epam.spring.library.service.PasswordService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
-@Component
+@Service
 @ConfigurationProperties(prefix = "config.password")
 class PasswordServiceImpl implements PasswordService {
     private String pepper;

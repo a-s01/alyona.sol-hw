@@ -2,7 +2,7 @@ package com.epam.spring.library.controller;
 
 import com.epam.spring.library.api.BookingBookAPI;
 import com.epam.spring.library.dto.BookDTO;
-import com.epam.spring.library.service.BookingService;
+import com.epam.spring.library.service.BookingBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class BookingBookController implements BookingBookAPI {
-    private final BookingService service;
+    private final BookingBookService service;
 
     @Override
     public List<BookDTO> getBooksInBooking(int id) {
