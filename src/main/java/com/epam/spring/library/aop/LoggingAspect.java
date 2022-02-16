@@ -28,9 +28,13 @@ public class LoggingAspect {
     @Pointcut("within(com.epam.spring.library.config..*)")
     private void inConfig() {}
 
+    @Pointcut("execution(* com.epam.spring.library.service.PasswordService"
+              + ".*(..))")
+    private void passwordService() {}
+
     @Pointcut("("
               + "inControllerLayer()"
-              + " || inServiceLayer()"
+              + " || (inServiceLayer() && !passwordService())"
               + " || inDataLayer()"
               + " && anyPublicMethod()" + ")")
     private void controllerServiceAndDataLayer() {}
