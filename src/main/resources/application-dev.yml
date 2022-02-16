@@ -4,3 +4,5 @@ spring:
       add-properties: "true"
     restart:
       enabled: "true"
+  jpa:
+    show-sql: "true"

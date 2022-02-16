@@ -1,18 +1,23 @@
 package com.epam.spring.library.repository;
 
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository {
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    User createUser(User user);
+    Optional<User> findByEmail(String email);
 
-    User getUser(String email);
+    default User getUser(String email) {
+        return findByEmail(email).orElseThrow(() -> new EntityNotFoundException(
+                "User with email " + email + " was not found"));
+    }
 
-    User updateUser(User user);
-
-    void deleteUser(String email);
-
-    List<User> getAllUsers();
+    default void deleteUser(String email) {
+        findByEmail(email).ifPresent(this::delete);
+    }
 }

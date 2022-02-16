@@ -28,14 +28,10 @@ public class LoggingAspect {
     @Pointcut("within(com.epam.spring.library.config..*)")
     private void inConfig() {}
 
-    @Pointcut("execution(* com.epam.spring.library.repository.BaseRepository"
-              + ".*(..))")
-    private void lowLevelRepositoryImpl() {}
-
     @Pointcut("("
               + "inControllerLayer()"
               + " || inServiceLayer()"
-              + " || (inDataLayer() && !lowLevelRepositoryImpl())"
+              + " || inDataLayer()"
               + " && anyPublicMethod()" + ")")
     private void controllerServiceAndDataLayer() {}
 

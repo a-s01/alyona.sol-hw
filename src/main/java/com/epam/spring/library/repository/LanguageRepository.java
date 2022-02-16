@@ -1,12 +1,19 @@
 package com.epam.spring.library.repository;
 
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Language;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface LanguageRepository {
+@Repository
+public interface LanguageRepository extends JpaRepository<Language, Integer> {
 
-    List<Language> getSupportedLanguages();
+    Optional<Language> findByCode(String code);
 
-    Language getLanguage(String code);
+    default Language getLanguage(String code) {
+        return findByCode(code).orElseThrow(() -> new EntityNotFoundException(
+                "Language with code " + code + " doesn't exists"));
+    }
 }

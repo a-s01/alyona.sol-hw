@@ -25,10 +25,10 @@ class UserServiceImpl implements UserService {
         User user = repository.getUser(email);
         return mapper.toDTO(user);
     }
-    
+
     public UserDTO createUser(UserDTO userDTO) {
         return mapper.toDTO(
-                repository.createUser(setUserDefaults(mapper.toUser(userDTO))));
+                repository.save(setUserDefaults(mapper.toUser(userDTO))));
     }
 
     private User setUserDefaults(User user) {
@@ -46,7 +46,7 @@ class UserServiceImpl implements UserService {
     public UserDTO updateUser(String email, UserDTO userDTO) {
         User toUpdate = repository.getUser(email);
         mapper.updateUser(userDTO, toUpdate);
-        return mapper.toDTO(repository.updateUser(toUpdate));
+        return mapper.toDTO(repository.save(toUpdate));
     }
 
     @Override
@@ -56,6 +56,6 @@ class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return mapper.toDTO(repository.getAllUsers());
+        return mapper.toDTO(repository.findAll());
     }
 }

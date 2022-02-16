@@ -1,26 +1,42 @@
 package com.epam.spring.library.model;
 
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.Calendar;
 
+@Entity
 @Data
 @ToString(exclude = {"password", "salt"})
-@Builder
-public class User implements Entity {
+public class User {
+
+    @Id
+    @GeneratedValue
     private int id;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String salt;
-    @Builder.Default
+
+    @Column(nullable = false)
     private Role role = Role.USER;
-    @Builder.Default
+
+    @Column(nullable = false)
     private State state = State.VALID;
+
+    @Column(nullable = false)
     private double fine;
+
     private String name;
+
+    @ManyToOne
     private Language preferredLanguage;
     private Calendar fineLastChecked;
 
@@ -36,16 +52,5 @@ public class User implements Entity {
      */
     public enum State {
         @Hidden UNKNOWN, VALID, BLOCKED, @Hidden DELETED
-    }
-
-    /**
-     * For avoiding password and salt leak through Builder toString() method,
-     * we should override it
-     */
-    public static class UserBuilder {
-        @Override
-        public String toString() {
-            return "UserBuilder(***)";
-        }
     }
 }

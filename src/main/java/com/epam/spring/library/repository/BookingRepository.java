@@ -1,18 +1,15 @@
 package com.epam.spring.library.repository;
 
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Booking;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
-public interface BookingRepository {
-
-    Booking getBooking(int id);
-
-    List<Booking> getAllBookings();
-
-    Booking createBooking(Booking booking);
-
-    Booking updateBooking(Booking booking);
-
-    void deleteBooking(int id);
+    default Booking getBooking(int id) {
+        return findById(id).orElseThrow(() -> new EntityNotFoundException(
+                "Booking with id " + id + " doesn't exists"));
+    }
 }

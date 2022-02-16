@@ -1,13 +1,20 @@
 package com.epam.spring.library.model;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 @Data
-@Builder
 @Jacksonized
-public class Language implements Entity {
+public class Language {
+
+    @Id
     private int id;
+
+    @Column(nullable = false, unique = true)
     private String code;
 }

@@ -13,6 +13,15 @@ config:
 spring:
   profiles:
     active: "dev"
+  datasource:
+    url: "jdbc:mysql://${MYSQL_DB_HOST}:${MYSQL_DB_PORT}/${MYSQL_DB_NAME}"
+    username: "${MYSQL_DB_USERNAME}"
+    password: "${MYSQL_DB_PASSWORD}"
+  jpa:
+    database-platform: "org.hibernate.dialect.MySQL5InnoDBDialect"
+    generate-ddl: "true"
+    hibernate:
+      ddl-auto: "update"
 
 management:
   server:

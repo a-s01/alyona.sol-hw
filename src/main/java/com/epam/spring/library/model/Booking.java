@@ -1,22 +1,30 @@
 package com.epam.spring.library.model;
 
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Data
-@Builder
-public class Booking implements Entity {
+public class Booking {
+
+    @Id
+    @GeneratedValue
     private int id;
+
+    @ManyToOne
     private User user;
-    @Builder.Default
+
+    @Column(nullable = false)
     private State state = State.NEW;
-    @Builder.Default
+
+    @Column(nullable = false)
     private Place located = Place.LIBRARY;
-    @Builder.Default
+
+    @OneToMany
     private List<Book> books = new ArrayList<>();
 
     public enum State {

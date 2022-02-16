@@ -20,3 +20,6 @@ out/
 
 # Log file
 *.log
+
+# Enviroment file #
+*.env

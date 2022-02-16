@@ -16,6 +16,6 @@ class LanguageServiceListImpl implements LanguageService {
 
     @Override
     public List<String> getSupportedLanguages() {
-        return mapper.toDTO(repository.getSupportedLanguages());
+        return mapper.toDTO(repository.findAll());
     }
 }

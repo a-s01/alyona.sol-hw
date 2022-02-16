@@ -1,18 +1,23 @@
 package com.epam.spring.library.repository;
 
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface AuthorRepository {
+@Repository
+public interface AuthorRepository extends JpaRepository<Author, Integer> {
 
-    Author getAuthor(String name);
+    Optional<Author> findByName(String name);
 
-    Author createAuthor(Author author);
+    default Author getByName(String name) {
+        return findByName(name).orElseThrow(() -> new EntityNotFoundException(
+                "Author named " + name + " was not found"));
+    }
 
-    Author updateAuthor(Author author);
-
-    void deleteAuthor(String name);
-
-    List<Author> getAllAuthors();
+    default void deleteByName(String name) {
+        findByName(name).ifPresent(this::delete);
+    }
 }

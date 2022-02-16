@@ -32,13 +32,13 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDTO> getAllBookings() {
-        return mapper.toDTO(repository.getAllBookings());
+        return mapper.toDTO(repository.findAll());
     }
 
     @Override
     public BookingDTO createBooking(BookingDTO bookingDTO) {
         return mapper.toDTO(
-                repository.createBooking(mapper.toBooking(bookingDTO)));
+                repository.save(mapper.toBooking(bookingDTO)));
     }
 
     @Override
@@ -46,7 +46,7 @@ class BookingServiceImpl implements BookingService {
         Booking toUpdate = repository.getBooking(id);
         validator.validateUpdate(toUpdate, bookingDTO);
         mapper.updateBooking(bookingDTO, toUpdate);
-        return mapper.toDTO(repository.updateBooking(toUpdate));
+        return mapper.toDTO(repository.save(toUpdate));
     }
 
     @Override
@@ -59,7 +59,7 @@ class BookingServiceImpl implements BookingService {
                 .map(bookRepository::getBook)
                 .collect(Collectors.toList());
         booking.getBooks().addAll(books);
-        repository.updateBooking(booking);
+        repository.save(booking);
         return bookMapper.toDTO(books);
     }
 
@@ -68,7 +68,7 @@ class BookingServiceImpl implements BookingService {
         Booking booking = repository.getBooking(id);
         validator.validateBookListChanges(booking);
         booking.getBooks().remove(bookRepository.getBook(isbn));
-        repository.updateBooking(booking);
+        repository.save(booking);
     }
 
     @Override

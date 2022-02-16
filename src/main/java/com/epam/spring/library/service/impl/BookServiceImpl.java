@@ -33,25 +33,25 @@ class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> getAllBooks() {
-        return mapper.toDTO(repository.getAllBooks());
+        return mapper.toDTO(repository.findAll());
     }
 
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
         return mapper.toDTO(
-                repository.createBook(setBookDefaults(mapper.toBook(bookDTO))));
+                repository.save(setBookDefaults(mapper.toBook(bookDTO))));
     }
 
     @Override
     public BookDTO updateBook(String isbn, BookDTO bookDTO) {
         Book toUpdate = repository.getBook(isbn);
         mapper.updateBook(bookDTO, toUpdate);
-        return mapper.toDTO(repository.updateBook(isbn, toUpdate));
+        return mapper.toDTO(repository.save(toUpdate));
     }
 
     @Override
     public void deleteBook(String isbn) {
-        repository.deleteBook(isbn);
+        repository.deleteByIsbn(isbn);
     }
 
     @Override
@@ -83,7 +83,7 @@ class BookServiceImpl implements BookService {
     private List<Author> getNewAuthorList(List<AuthorDTO> authorDTOs) {
         return authorDTOs.stream()
                          .map(AuthorDTO::getDefaultName)
-                         .map(authorRepository::getAuthor)
+                         .map(authorRepository::getByName)
                          .collect(Collectors.toList());
     }
 
@@ -96,7 +96,7 @@ class BookServiceImpl implements BookService {
     public void deleteAuthorOfBook(String isbn, String authorName) {
         repository.getBook(isbn)
                   .getAuthors()
-                  .remove(authorRepository.getAuthor(authorName));
+                  .remove(authorRepository.getByName(authorName));
     }
 
     @Override

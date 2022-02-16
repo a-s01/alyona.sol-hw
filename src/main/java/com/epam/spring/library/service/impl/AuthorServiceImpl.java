@@ -23,35 +23,35 @@ class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorDTO getAuthor(String name) {
-        return mapper.toDTO(repository.getAuthor(name));
+        return mapper.toDTO(repository.getByName(name));
     }
 
     @Override
     public AuthorDTO createAuthor(AuthorDTO authorDTO) {
         Author newAuthor = mapper.toAuthor(authorDTO);
-        return mapper.toDTO(repository.createAuthor(newAuthor));
+        return mapper.toDTO(repository.save(newAuthor));
     }
 
     @Override
     public AuthorDTO updateAuthor(String name, AuthorDTO authorDTO) {
-        Author toUpdate = repository.getAuthor(name);
+        Author toUpdate = repository.getByName(name);
         mapper.updateAuthor(authorDTO, toUpdate);
-        return mapper.toDTO(repository.updateAuthor(toUpdate));
+        return mapper.toDTO(repository.save(toUpdate));
     }
 
     @Override
     public void deleteAuthor(String name) {
-        repository.deleteAuthor(name);
+        repository.deleteByName(name);
     }
 
     @Override
     public List<AuthorDTO> getAllAuthors() {
-        return mapper.toDTO(repository.getAllAuthors());
+        return mapper.toDTO(repository.findAll());
     }
 
     @Override
     public Map<String, String> getAllAuthorNameTranslations(String name) {
-        Author author = repository.getAuthor(name);
+        Author author = repository.getByName(name);
         return languageMapper.toDTO(author.getNameTranslations());
     }
 
@@ -60,7 +60,7 @@ class AuthorServiceImpl implements AuthorService {
                                                            String langCode,
                                                            String nameTranslation) {
 
-        Author author = repository.getAuthor(name);
+        Author author = repository.getByName(name);
         Language lang = languageMapper.toLanguage(langCode);
         author.getNameTranslations().put(lang, nameTranslation);
         return languageMapper.toDTO(author.getNameTranslations());
@@ -68,13 +68,13 @@ class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void clearAuthorNameTranslationsList(String name) {
-        repository.getAuthor(name).getNameTranslations().clear();
+        repository.getByName(name).getNameTranslations().clear();
     }
 
     @Override
     public void deleteAuthorNameTranslationByLangCode(String name,
                                                       String langCode) {
-        Author author = repository.getAuthor(name);
+        Author author = repository.getByName(name);
         Language lang = languageMapper.toLanguage(langCode);
         author.getNameTranslations().remove(lang);
     }
@@ -82,7 +82,7 @@ class AuthorServiceImpl implements AuthorService {
     @Override
     public String getAuthorNameTranslationByLangCode(String name,
                                                      String langCode) {
-        Author author = repository.getAuthor(name);
+        Author author = repository.getByName(name);
         Language lang = languageMapper.toLanguage(langCode);
 
         if (!author.getNameTranslations().containsKey(lang)) {

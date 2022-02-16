@@ -1,18 +1,24 @@
 package com.epam.spring.library.repository;
 
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface BookRepository {
+@Repository
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    Book getBook(String isbn);
+    Optional<Book> findBookByIsbn(String isbn);
 
-    List<Book> getAllBooks();
+    default Book getBook(String isbn) {
+        return findBookByIsbn(isbn).orElseThrow(
+                () -> new EntityNotFoundException(
+                        "Book with ISBN " + isbn + " was not found."));
+    }
 
-    Book createBook(Book book);
-
-    Book updateBook(String isbn, Book book);
-
-    void deleteBook(String isbn);
+    default void deleteByIsbn(String isbn) {
+        findBookByIsbn(isbn).ifPresent(this::delete);
+    }
 }
