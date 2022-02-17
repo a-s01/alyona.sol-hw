@@ -6,6 +6,7 @@ import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.exception.ErrorType;
 import com.epam.spring.library.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,6 +18,7 @@ import org.springframework.web.method.HandlerMethod;
 import javax.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.epam.spring.library.exception.ErrorType.*;
@@ -98,11 +100,21 @@ public class ErrorHandler {
         return handleCustomException(ex, hm);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDTO handleDataIntegrityViolationException(
+            DataIntegrityViolationException ex) {
+        final String rootCauseMsg = getRootCause(ex).getMessage();
+        log.error("{}: {}: {}", ex.getClass().getSimpleName(),
+                  ex.getMessage(), rootCauseMsg);
+        return getErrorDTO(rootCauseMsg, PROCESSING_ERROR);
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDTO handleException(Exception ex) {
         log.error("", ex);
-        return getErrorDTO(ex.getMessage(), FATAL_ERROR);
+        return getErrorDTO(getRootCause(ex).getMessage(), FATAL_ERROR);
     }
 
     private void log(Exception ex, HandlerMethod hm) {
@@ -110,5 +122,16 @@ public class ErrorHandler {
                   hm.getMethod().getDeclaringClass().getSimpleName(),
                   hm.getMethod().getName(), ex.getClass().getSimpleName(),
                   ex.getMessage());
+    }
+
+    private Throwable getRootCause(Throwable throwable) {
+        Objects.requireNonNull(throwable);
+        Throwable rootCause = throwable;
+
+        while (rootCause.getCause() != null
+               && rootCause.getCause() != rootCause) {
+            rootCause = rootCause.getCause();
+        }
+        return rootCause;
     }
 }
