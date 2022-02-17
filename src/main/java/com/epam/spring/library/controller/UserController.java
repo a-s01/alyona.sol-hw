@@ -4,11 +4,11 @@ import com.epam.spring.library.api.UserAPI;
 import com.epam.spring.library.dto.UserDTO;
 import com.epam.spring.library.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +21,8 @@ public class UserController implements UserAPI {
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
-        return service.getAllUsers();
+    public Page<UserDTO> getAllUsers(Pageable page) {
+        return service.getAllUsers(page);
     }
 
     @Override

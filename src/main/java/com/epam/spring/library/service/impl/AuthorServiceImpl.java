@@ -7,9 +7,9 @@ import com.epam.spring.library.repository.AuthorRepository;
 import com.epam.spring.library.service.AuthorService;
 import com.epam.spring.library.service.validation.AuthorValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +44,7 @@ class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDTO> getAllAuthors() {
-        return mapper.toDTO(repository.findAll());
+    public Page<AuthorDTO> getAllAuthors(Pageable page) {
+        return repository.findAll(page).map(mapper::toDTO);
     }
 }

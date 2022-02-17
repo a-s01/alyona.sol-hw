@@ -4,12 +4,14 @@ import com.epam.spring.library.dto.BookDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.hibernate.validator.constraints.ISBN;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Tag(name="Book API")
 @Validated
@@ -29,7 +31,7 @@ public interface BookAPI {
     @Operation(summary = "Get all books")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<BookDTO> getAllBooks();
+    Page<BookDTO> getAllBooks(@SortDefault("isbn") Pageable page);
 
     @Operation(summary = "Update a book with specific ISBN number")
     @PutMapping("/{isbn}")

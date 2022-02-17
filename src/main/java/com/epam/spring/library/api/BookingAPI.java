@@ -5,12 +5,15 @@ import com.epam.spring.library.dto.group.OnCreate;
 import com.epam.spring.library.dto.group.OnUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.util.List;
 
 @Tag(name = "Booking API")
 @Validated
@@ -20,7 +23,9 @@ public interface BookingAPI {
     @Operation(summary = "Get all bookings")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<BookingDTO> getAllBookings();
+    Page<BookingDTO> getAllBookings(
+            @SortDefault(value = "id", direction = Sort.Direction.DESC)
+                    Pageable page);
 
     @Operation(summary = "Get booking by id")
     @GetMapping("/{id}")

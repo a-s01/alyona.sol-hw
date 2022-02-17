@@ -3,13 +3,14 @@ package com.epam.spring.library.api;
 import com.epam.spring.library.dto.AuthorDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Tag(name = "Author API")
 @Validated
@@ -24,7 +25,7 @@ public interface AuthorAPI {
     @Operation(summary = "Get all authors")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<AuthorDTO> getAllAuthors();
+    Page<AuthorDTO> getAllAuthors(Pageable page);
 
     @Operation(summary = "Create a new author")
     @PostMapping

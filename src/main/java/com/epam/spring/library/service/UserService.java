@@ -1,8 +1,8 @@
 package com.epam.spring.library.service;
 
 import com.epam.spring.library.dto.UserDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
@@ -14,5 +14,5 @@ public interface UserService {
 
     void deleteUser(String email);
 
-    List<UserDTO> getAllUsers();
+    Page<UserDTO> getAllUsers(Pageable page);
 }

@@ -6,9 +6,9 @@ import com.epam.spring.library.model.Book;
 import com.epam.spring.library.repository.BookRepository;
 import com.epam.spring.library.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +23,8 @@ class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDTO> getAllBooks() {
-        return mapper.toDTO(repository.findAll());
+    public Page<BookDTO> getAllBooks(Pageable page) {
+        return repository.findAll(page).map(mapper::toDTO);
     }
 
     @Override

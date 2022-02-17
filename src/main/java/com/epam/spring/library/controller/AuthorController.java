@@ -4,9 +4,9 @@ import com.epam.spring.library.api.AuthorAPI;
 import com.epam.spring.library.dto.AuthorDTO;
 import com.epam.spring.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +19,8 @@ public class AuthorController implements AuthorAPI {
     }
 
     @Override
-    public List<AuthorDTO> getAllAuthors() {
-        return service.getAllAuthors();
+    public Page<AuthorDTO> getAllAuthors(Pageable page) {
+        return service.getAllAuthors(page);
     }
 
     @Override

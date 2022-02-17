@@ -2,12 +2,12 @@ package com.epam.spring.library.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.List;
 
 /**
  * Language controller is responsible for handle request related to
@@ -21,5 +21,5 @@ public interface LanguageAPI {
     @Operation(summary = "Get all supported languages")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    List<String> getSupportedLanguages();
+    Page<String> getSupportedLanguages(Pageable page);
 }

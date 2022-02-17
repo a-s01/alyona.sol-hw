@@ -1,8 +1,8 @@
 package com.epam.spring.library.service;
 
 import com.epam.spring.library.dto.AuthorDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AuthorService {
 
@@ -14,5 +14,5 @@ public interface AuthorService {
 
     void deleteAuthor(String name);
 
-    List<AuthorDTO> getAllAuthors();
+    Page<AuthorDTO> getAllAuthors(Pageable page);
 }

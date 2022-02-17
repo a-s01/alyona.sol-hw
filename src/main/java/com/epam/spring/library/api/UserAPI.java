@@ -12,12 +12,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -59,7 +60,7 @@ public interface UserAPI {
     @Operation(summary = "Get all users")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    List<UserDTO> getAllUsers();
+    Page<UserDTO> getAllUsers(Pageable page);
 
     @Operation(summary = "Create user")
     @ResponseStatus(HttpStatus.CREATED)

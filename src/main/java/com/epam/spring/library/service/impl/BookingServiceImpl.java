@@ -8,9 +8,9 @@ import com.epam.spring.library.repository.UserRepository;
 import com.epam.spring.library.service.BookingService;
 import com.epam.spring.library.service.validation.BookingValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +26,8 @@ class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDTO> getAllBookings() {
-        return mapper.toDTO(repository.findAll());
+    public Page<BookingDTO> getAllBookings(Pageable page) {
+        return repository.findAll(page).map(mapper::toDTO);
     }
 
     @Override

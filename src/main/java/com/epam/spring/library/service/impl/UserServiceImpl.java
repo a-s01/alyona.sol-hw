@@ -9,9 +9,9 @@ import com.epam.spring.library.service.PasswordService;
 import com.epam.spring.library.service.UserService;
 import com.epam.spring.library.service.validation.UserValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static com.epam.spring.library.model.User.State.DELETED;
 
@@ -62,7 +62,7 @@ class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
-        return mapper.toDTO(repository.findAll());
+    public Page<UserDTO> getAllUsers(Pageable page) {
+        return repository.findAll(page).map(mapper::toDTO);
     }
 }

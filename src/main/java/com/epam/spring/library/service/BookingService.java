@@ -1,14 +1,14 @@
 package com.epam.spring.library.service;
 
 import com.epam.spring.library.dto.BookingDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BookingService {
 
     BookingDTO getBooking(int id);
 
-    List<BookingDTO> getAllBookings();
+    Page<BookingDTO> getAllBookings(Pageable page);
 
     BookingDTO createBooking(BookingDTO bookingDTO);
 

@@ -4,9 +4,9 @@ import com.epam.spring.library.api.BookAPI;
 import com.epam.spring.library.dto.BookDTO;
 import com.epam.spring.library.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +24,8 @@ public class BookController implements BookAPI {
     }
 
     @Override
-    public List<BookDTO> getAllBooks() {
-        return service.getAllBooks();
+    public Page<BookDTO> getAllBooks(Pageable page) {
+        return service.getAllBooks(page);
     }
 
     @Override
