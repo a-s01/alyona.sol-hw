@@ -7,10 +7,13 @@ import com.epam.spring.library.model.User;
 import com.epam.spring.library.repository.UserRepository;
 import com.epam.spring.library.service.PasswordService;
 import com.epam.spring.library.service.UserService;
+import com.epam.spring.library.service.validation.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.epam.spring.library.model.User.State.DELETED;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ class UserServiceImpl implements UserService {
     private final UserMapper mapper;
     private final Language defaultLanguage;
     private final PasswordService passwordService;
+    private final UserValidationService validator;
 
     @Override
     public UserDTO getUser(String email) {
@@ -51,7 +55,10 @@ class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String email) {
-        repository.deleteUser(email);
+        User user = repository.getUser(email);
+        validator.validateDelete(user);
+        user.setState(DELETED);
+        repository.save(user);
     }
 
     @Override

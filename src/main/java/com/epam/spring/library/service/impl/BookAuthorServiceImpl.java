@@ -36,6 +36,7 @@ class BookAuthorServiceImpl implements BookAuthorService {
                     "author list of book isbn#" + isbn + " is not " + "empty");
         }
         book.getAuthors().addAll(getNewAuthorList(authorDTOs));
+        repository.save(book);
         return authorMapper.toDTO(book.getAuthors());
     }
 
@@ -45,34 +46,37 @@ class BookAuthorServiceImpl implements BookAuthorService {
         Book book = repository.getBook(isbn);
         book.getAuthors().clear();
         book.getAuthors().addAll(getNewAuthorList(authorDTOs));
+        repository.save(book);
         return authorMapper.toDTO(book.getAuthors());
     }
 
     private List<Author> getNewAuthorList(List<AuthorDTO> authorDTOs) {
         return authorDTOs.stream()
-                         .map(AuthorDTO::getDefaultName)
+                         .map(AuthorDTO::getName)
                          .map(authorRepository::getByName)
                          .collect(Collectors.toList());
     }
 
     @Override
     public void clearAuthorListOfBook(String isbn) {
-        repository.getBook(isbn).getAuthors().clear();
+        Book book = repository.getBook(isbn);
+        book.getAuthors().clear();
+        repository.save(book);
     }
 
     @Override
     public void deleteAuthorOfBook(String isbn, String authorName) {
-        repository.getBook(isbn)
-                  .getAuthors()
-                  .remove(authorRepository.getByName(authorName));
+        Book book = repository.getBook(isbn);
+        book.getAuthors().remove(authorRepository.getByName(authorName));
+        repository.save(book);
     }
 
     @Override
     public Set<AuthorDTO> addAuthorsToBook(String isbn,
                                            List<AuthorDTO> authorDTOs) {
-        repository.getBook(isbn)
-                  .getAuthors()
-                  .addAll(getNewAuthorList(authorDTOs));
-        return authorMapper.toDTO(repository.getBook(isbn).getAuthors());
+        Book book = repository.getBook(isbn);
+        book.getAuthors().addAll(getNewAuthorList(authorDTOs));
+        repository.save(book);
+        return authorMapper.toDTO(book.getAuthors());
     }
 }

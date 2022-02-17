@@ -16,8 +16,4 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
         return findByName(name).orElseThrow(() -> new EntityNotFoundException(
                 "Author named " + name + " was not found"));
     }
-
-    default void deleteByName(String name) {
-        findByName(name).ifPresent(this::delete);
-    }
 }

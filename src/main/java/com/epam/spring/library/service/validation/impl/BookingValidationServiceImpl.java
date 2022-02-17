@@ -1,4 +1,4 @@
-package com.epam.spring.library.validation.service.impl;
+package com.epam.spring.library.service.validation.impl;
 
 import com.epam.spring.library.dto.BookingDTO;
 import com.epam.spring.library.exception.InvalidStateException;
@@ -6,7 +6,7 @@ import com.epam.spring.library.exception.ServiceException;
 import com.epam.spring.library.model.Booking;
 import com.epam.spring.library.model.Booking.Place;
 import com.epam.spring.library.model.Booking.State;
-import com.epam.spring.library.validation.service.BookingValidationService;
+import com.epam.spring.library.service.validation.BookingValidationService;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumMap;

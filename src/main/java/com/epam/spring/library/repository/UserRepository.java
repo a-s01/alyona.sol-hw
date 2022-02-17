@@ -16,8 +16,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
         return findByEmail(email).orElseThrow(() -> new EntityNotFoundException(
                 "User with email " + email + " was not found"));
     }
-
-    default void deleteUser(String email) {
-        findByEmail(email).ifPresent(this::delete);
-    }
 }

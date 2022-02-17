@@ -7,7 +7,7 @@ import com.epam.spring.library.model.Booking;
 import com.epam.spring.library.repository.BookRepository;
 import com.epam.spring.library.repository.BookingRepository;
 import com.epam.spring.library.service.BookingBookService;
-import com.epam.spring.library.validation.service.BookingValidationService;
+import com.epam.spring.library.service.validation.BookingValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

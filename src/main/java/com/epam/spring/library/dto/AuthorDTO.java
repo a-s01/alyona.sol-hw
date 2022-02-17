@@ -19,11 +19,11 @@ public class AuthorDTO {
     @JsonProperty(access = READ_ONLY)
     private int id;
 
-    @JsonAlias("name")
+    @JsonAlias("defaultName")
     @NotBlank(message = "{author.name.empty}")
-    private String defaultName;
+    private String name;
 
-    @JsonAlias("language")
+    @JsonAlias("defaultLanguage")
     @NotBlank(message = "{author.language.empty}")
-    private String defaultLanguage;
+    private String language;
 }

@@ -4,8 +4,9 @@ import com.epam.spring.library.dto.BookingDTO;
 import com.epam.spring.library.dto.mapper.BookingMapper;
 import com.epam.spring.library.model.Booking;
 import com.epam.spring.library.repository.BookingRepository;
+import com.epam.spring.library.repository.UserRepository;
 import com.epam.spring.library.service.BookingService;
-import com.epam.spring.library.validation.service.BookingValidationService;
+import com.epam.spring.library.service.validation.BookingValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ class BookingServiceImpl implements BookingService {
     private final BookingRepository repository;
     private final BookingMapper mapper;
     private final BookingValidationService validator;
+    private final UserRepository userRepository;
 
     @Override
     public BookingDTO getBooking(int id) {
@@ -30,8 +32,10 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO createBooking(BookingDTO bookingDTO) {
+        Booking booking = mapper.toBooking(bookingDTO);
+        booking.setUser(userRepository.getUser(booking.getUser().getEmail()));
         return mapper.toDTO(
-                repository.save(mapper.toBooking(bookingDTO)));
+                repository.save(booking));
     }
 
     @Override

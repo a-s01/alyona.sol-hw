@@ -1,4 +1,4 @@
-package com.epam.spring.library.validation.service;
+package com.epam.spring.library.service.validation;
 
 import com.epam.spring.library.dto.BookingDTO;
 import com.epam.spring.library.model.Booking;

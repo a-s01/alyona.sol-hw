@@ -28,7 +28,6 @@ public class BookDTO {
     private String isbn;
 
     @Schema(description = "book publication year")
-    @NotBlank(message = "{book.publication.year.empty}")
     @PublicationYear
     private int year;
 

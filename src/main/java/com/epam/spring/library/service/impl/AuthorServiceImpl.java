@@ -5,6 +5,7 @@ import com.epam.spring.library.dto.mapper.AuthorMapper;
 import com.epam.spring.library.model.Author;
 import com.epam.spring.library.repository.AuthorRepository;
 import com.epam.spring.library.service.AuthorService;
+import com.epam.spring.library.service.validation.AuthorValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository repository;
+    private final AuthorValidationService validator;
     private final AuthorMapper mapper;
 
     @Override
@@ -36,7 +38,9 @@ class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(String name) {
-        repository.deleteByName(name);
+        Author author = repository.getByName(name);
+        validator.validateDelete(author);
+        repository.delete(author);
     }
 
     @Override
