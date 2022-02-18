@@ -5,7 +5,6 @@ import com.epam.spring.library.model.Language;
 import com.epam.spring.library.repository.LanguageRepository;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-@Slf4j
 @Configuration
 @ConfigurationProperties("config")
 @Getter
@@ -25,7 +23,6 @@ public class BeanConfig {
 
     @Bean
     public Language defaultLanguage(LanguageRepository languageRepository) {
-        log.info("language repository is {}", languageRepository);
         return languageRepository.getLanguage(primaryLanguage);
     }
 

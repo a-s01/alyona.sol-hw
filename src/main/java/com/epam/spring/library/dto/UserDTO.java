@@ -71,7 +71,6 @@ public class UserDTO {
             externalDocs = @ExternalDocumentation(
                     url = "https://www.loc.gov/standards/iso639-2/php"
                           + "/English_list.php"))
-    @NotBlank(message = "{user.language.empty}", groups = OnCreate.class)
     @Pattern(regexp = "\\S", message = "{user.language.empty}",
              groups = OnUpdate.class)
     private String preferredLanguage;
