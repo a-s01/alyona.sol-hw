@@ -2,18 +2,32 @@ package com.epam.spring.library.repository;
 
 import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.User;
+import com.epam.spring.library.model.User.State;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+
+import static com.epam.spring.library.model.User.State.DELETED;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmail(String email);
 
-    default User getUser(String email) {
-        return findByEmail(email).orElseThrow(() -> new EntityNotFoundException(
-                "User with email " + email + " was not found"));
+    //Page<User> findTop10ByStateNotEquals(User.State state, Pageable page);
+    Page<User> findTop10ByStateNot(State state, Pageable pageable);
+
+    default User getActiveUser(String email) {
+        return findByEmail(email).filter(this::notDeleted)
+                                 .orElseThrow(() -> new EntityNotFoundException(
+                                         "User with email " + email
+                                         + " was not found"));
+    }
+
+    default boolean notDeleted(User user) {
+        return user.getState() != DELETED;
     }
 }

@@ -18,9 +18,11 @@ public class Booking {
     @ManyToOne
     private User user;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private State state = State.NEW;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Place located = Place.LIBRARY;
 

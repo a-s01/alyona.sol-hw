@@ -25,9 +25,11 @@ public class User {
     @Column(nullable = false)
     private String salt;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private State state = State.VALID;
 

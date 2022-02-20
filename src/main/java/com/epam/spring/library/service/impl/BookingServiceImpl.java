@@ -33,7 +33,7 @@ class BookingServiceImpl implements BookingService {
     @Override
     public BookingDTO createBooking(BookingDTO bookingDTO) {
         Booking booking = mapper.toBooking(bookingDTO);
-        booking.setUser(userRepository.getUser(booking.getUser().getEmail()));
+        booking.setUser(userRepository.getActiveUser(booking.getUser().getEmail()));
         return mapper.toDTO(
                 repository.save(booking));
     }

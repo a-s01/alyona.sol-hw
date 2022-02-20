@@ -26,7 +26,7 @@ class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUser(String email) {
-        User user = repository.getUser(email);
+        User user = repository.getActiveUser(email);
         return mapper.toDTO(user);
     }
 
@@ -48,14 +48,14 @@ class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(String email, UserDTO userDTO) {
-        User toUpdate = repository.getUser(email);
+        User toUpdate = repository.getActiveUser(email);
         mapper.updateUser(userDTO, toUpdate);
         return mapper.toDTO(repository.save(toUpdate));
     }
 
     @Override
     public void deleteUser(String email) {
-        User user = repository.getUser(email);
+        User user = repository.getActiveUser(email);
         validator.validateDelete(user);
         user.setState(DELETED);
         repository.save(user);
@@ -63,6 +63,6 @@ class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserDTO> getAllUsers(Pageable page) {
-        return repository.findAll(page).map(mapper::toDTO);
+        return repository.findTop10ByStateNot(DELETED, page).map(mapper::toDTO);
     }
 }
