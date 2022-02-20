@@ -3,8 +3,8 @@ package com.epam.spring.library.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,6 +20,6 @@ public class Author {
     @ManyToOne
     private Language language;
 
-    @Transient
-    private final Map<Language, String> nameTranslations = new HashMap<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private final Set<AuthorTranslation> nameTranslations = new HashSet<>();
 }

@@ -3,7 +3,6 @@ package com.epam.spring.library.dto.mapper;
 import com.epam.spring.library.model.Language;
 
 import java.util.List;
-import java.util.Map;
 
 public interface LanguageMapper {
     /**
@@ -15,6 +14,7 @@ public interface LanguageMapper {
 
     /**
      * Must return language supported by this app, exception otherwise
+     *
      * @param code iso 2- or 3-letter language code
      * @return object of supported language specified by code
      */
@@ -23,6 +23,4 @@ public interface LanguageMapper {
     String toDTO(Language language);
 
     List<String> toDTO(List<Language> languages);
-
-    Map<String, String> toDTO(Map<Language, String> map);
 }

@@ -13,7 +13,7 @@ import java.util.Map;
 @Tag(name = "Author name translations API")
 @Validated
 @RequestMapping("api/v1/author")
-public interface AuthorNameTranslationAPI {
+public interface AuthorTranslationAPI {
 
     @Operation(summary = "Get all author name translations")
     @GetMapping("/{name}/name-translations")

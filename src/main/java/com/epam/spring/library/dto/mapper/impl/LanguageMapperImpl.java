@@ -1,23 +1,27 @@
 package com.epam.spring.library.dto.mapper.impl;
 
 import com.epam.spring.library.dto.mapper.LanguageMapper;
+import com.epam.spring.library.exception.EntityNotFoundException;
 import com.epam.spring.library.model.Language;
 import com.epam.spring.library.repository.LanguageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class LanguageMapperImpl implements LanguageMapper {
+class LanguageMapperImpl implements LanguageMapper {
     private final LanguageRepository repository;
 
     @Override
     public Language toLanguage(String code) {
         if (Objects.isNull(code)) {
-            return null;
+            throw new EntityNotFoundException(
+                    "Null as language code isn't supported");
         }
 
         return repository.getLanguage(code);
@@ -41,16 +45,5 @@ public class LanguageMapperImpl implements LanguageMapper {
         return languages.stream()
                         .map(Language::getCode)
                         .collect(Collectors.toList());
-    }
-
-    @Override
-    public Map<String, String> toDTO(Map<Language, String> map) {
-        if (Objects.isNull(map)) {
-            return Collections.emptyMap();
-        }
-
-        Map<String, String> result = new HashMap<>();
-        map.forEach((k, v) -> result.put(toDTO(k), v));
-        return result;
     }
 }

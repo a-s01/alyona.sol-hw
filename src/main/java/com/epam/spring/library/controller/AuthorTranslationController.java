@@ -1,7 +1,7 @@
 package com.epam.spring.library.controller;
 
-import com.epam.spring.library.api.AuthorNameTranslationAPI;
-import com.epam.spring.library.service.AuthorNameTranslationService;
+import com.epam.spring.library.api.AuthorTranslationAPI;
+import com.epam.spring.library.service.AuthorTranslationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,8 +9,8 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class AuthorNameTranslationController implements AuthorNameTranslationAPI {
-    private final AuthorNameTranslationService service;
+public class AuthorTranslationController implements AuthorTranslationAPI {
+    private final AuthorTranslationService service;
 
     @Override
     public Map<String, String> getAllAuthorNameTranslations(String name) {

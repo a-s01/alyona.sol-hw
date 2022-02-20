@@ -2,7 +2,7 @@ package com.epam.spring.library.service;
 
 import java.util.Map;
 
-public interface AuthorNameTranslationService {
+public interface AuthorTranslationService {
 
     Map<String, String> getAllAuthorNameTranslations(String name);
 
