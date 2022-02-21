@@ -30,6 +30,7 @@ class UserServiceImpl implements UserService {
         return mapper.toDTO(user);
     }
 
+    @Override
     public UserDTO createUser(UserDTO userDTO) {
         return mapper.toDTO(
                 repository.save(setUserDefaults(mapper.toUser(userDTO))));
