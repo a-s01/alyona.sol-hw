@@ -15,17 +15,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.HandlerMethod;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.epam.spring.library.exception.ErrorType.*;
 
 @Slf4j
 @RestControllerAdvice
-public class ErrorHandler {
+class ErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -47,8 +49,12 @@ public class ErrorHandler {
         log(ex, hm);
         return ex.getConstraintViolations()
                  .stream()
-                 .map(e -> getErrorDTO(e.getMessage(), VALIDATION_ERROR))
+                 .map(toErrorDTOFunction())
                  .collect(Collectors.toList());
+    }
+
+    private Function<ConstraintViolation<?>, ErrorDTO> toErrorDTOFunction() {
+        return e -> getErrorDTO(e.getMessage(), VALIDATION_ERROR);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
