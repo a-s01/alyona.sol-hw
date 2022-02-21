@@ -81,10 +81,11 @@ class BookServiceImpl implements BookService {
     }
 
     private List<Author> getNewAuthorList(List<AuthorDTO> authorDTOs) {
-        return authorDTOs.stream()
-                         .map(AuthorDTO::getDefaultName)
-                         .map(authorRepository::getAuthor)
-                         .collect(Collectors.toList());
+        return authorDTOs
+                .stream()
+                .map(AuthorDTO::getDefaultName)
+                .map(authorRepository::getAuthor)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -23,8 +23,9 @@ class UserServiceImpl implements UserService {
         User user = repository.getUser(email);
         return mapper.toDTO(user);
     }
-    
-    public UserDTO createUser(UserDTO userDTO) {
+
+    @Override
+    public UserDTO createUser(UserEditDTO userEditDTO) {
         return mapper.toDTO(
                 repository.createUser(setUserDefaults(mapper.toUser(userDTO))));
     }
