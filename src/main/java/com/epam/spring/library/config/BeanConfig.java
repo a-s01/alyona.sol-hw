@@ -1,12 +1,16 @@
 package com.epam.spring.library.config;
 
+import com.epam.spring.library.model.Book;
 import com.epam.spring.library.model.Language;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.List;
 public class BeanConfig {
     private List<String> languages;
     private String primaryLanguage;
+    private int keepPeriod;
+    private String messageFile;
 
     @Bean
     public List<Language> supportedLanguages() {
@@ -42,5 +48,26 @@ public class BeanConfig {
                                                        .equals(primaryLanguage))
                                    .findFirst()
                                    .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Bean
+    public Book bookDefaults() {
+        return Book.builder().keepPeriod(keepPeriod).build();
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource =
+                new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:" + messageFile);
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+
+    @Bean
+    public LocalValidatorFactoryBean getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
     }
 }

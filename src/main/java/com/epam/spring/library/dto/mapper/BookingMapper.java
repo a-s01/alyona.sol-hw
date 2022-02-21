@@ -19,5 +19,6 @@ public interface BookingMapper {
             nullValuePropertyMappingStrategy =
                     NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
     void updateBooking(BookingDTO bookingDTO, @MappingTarget Booking booking);
 }

@@ -15,8 +15,6 @@ public interface BookingService {
 
     BookingDTO updateBooking(int id, BookingDTO bookingDTO);
 
-    void deleteBooking(int id);
-
     List<BookDTO> addBookToBooking(int id, List<BookDTO> bookDTOs);
 
     void deleteBookFromBooking(int id, String isbn);

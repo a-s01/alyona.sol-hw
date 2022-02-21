@@ -24,6 +24,7 @@ class BookServiceImpl implements BookService {
     private final BookMapper mapper;
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
+    private final Book bookDefaults;
 
     @Override
     public BookDTO getBook(String isbn) {
@@ -37,7 +38,8 @@ class BookServiceImpl implements BookService {
 
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
-        return mapper.toDTO(repository.createBook(mapper.toBook(bookDTO)));
+        return mapper.toDTO(
+                repository.createBook(setBookDefaults(mapper.toBook(bookDTO))));
     }
 
     @Override
@@ -93,19 +95,25 @@ class BookServiceImpl implements BookService {
 
     @Override
     public void deleteAuthorOfBook(String isbn, String authorName) {
-        repository
-                .getBook(isbn)
-                .getAuthors()
-                .remove(authorRepository.getAuthor(authorName));
+        repository.getBook(isbn)
+                  .getAuthors()
+                  .remove(authorRepository.getAuthor(authorName));
     }
 
     @Override
     public Set<AuthorDTO> addAuthorsToBook(String isbn,
                                            List<AuthorDTO> authorDTOs) {
-        repository
-                .getBook(isbn)
-                .getAuthors()
-                .addAll(getNewAuthorList(authorDTOs));
+        repository.getBook(isbn)
+                  .getAuthors()
+                  .addAll(getNewAuthorList(authorDTOs));
         return authorMapper.toDTO(repository.getBook(isbn).getAuthors());
+    }
+
+    private Book setBookDefaults(Book book) {
+        if (book.getKeepPeriod() <= 0) {
+            book.setKeepPeriod(bookDefaults.getKeepPeriod());
+        }
+
+        return book;
     }
 }

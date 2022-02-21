@@ -6,6 +6,12 @@ public class ServiceException extends RuntimeException {
         super(message);
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "(message: " + getMessage()
+               + ", error type: " + getErrorType() + ")";
+    }
+
     public ErrorType getErrorType() {
         return ErrorType.FATAL_ERROR;
     }

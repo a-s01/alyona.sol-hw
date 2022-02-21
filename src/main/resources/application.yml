@@ -1,6 +1,33 @@
+# http://localhost:8080/swagger-ui/index.html - swagger ui link
 config:
   primary-language: "en"
   languages:
       - "ru"
       - "ua"
       - "en"
+  keepPeriod: 14
+  messageFile: "messages"
+
+management:
+  server:
+    port: 9090 #required for actuator & swagger-ui working along
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - loggers
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    loggers:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    tagsSorter: "alpha" #For sorting tags alphabetically

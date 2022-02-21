@@ -1,0 +1,7 @@
+# just to be completely sure nobody will use devtools on "production"
+spring:
+  devtools:
+    devtools:
+      add-properties: "false"
+    restart:
+      enabled: "false"

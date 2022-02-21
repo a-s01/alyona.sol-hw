@@ -48,7 +48,7 @@ class ListRepositoryImpl<T extends Entity> implements BaseRepository<T> {
 
         if (existed.isPresent()) {
             throw new EntityAlreadyExistsException(
-                    model.getClass().getSimpleName() + "with " + key
+                    model.getClass().getSimpleName() + " with " + key
                     + " key already exists");
         }
 
