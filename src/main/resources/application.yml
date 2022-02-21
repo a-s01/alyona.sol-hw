@@ -8,23 +8,25 @@ config:
   keepPeriod: 14
   messageFile: "messages"
 
-spring:
-  profiles:
-    active: "dev"
-
 management:
   server:
     port: 9090 #required for actuator & swagger-ui working along
   endpoints:
+    enabled-by-default: false
     web:
       exposure:
-        include: "health,info"
+        include:
+          - health
+          - info
+          - loggers
   endpoint:
     health:
-      show-details: "always"
-  info:
-    java:
-      enabled: "true"
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    loggers:
+      enabled: true
 
 springdoc:
   swagger-ui:
