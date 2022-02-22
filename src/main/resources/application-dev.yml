@@ -4,13 +4,8 @@ spring:
       add-properties: "true"
     restart:
       enabled: "true"
-
-logging:
-  level:
-    org:
+  jpa:
+    show-sql: true
+    properties:
       hibernate:
-        SQL: "DEBUG"
-      type:
-        descriptor:
-          sql:
-            BasicBinder: "TRACE"
+        format_sql: true

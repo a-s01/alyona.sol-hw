@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Service
@@ -28,10 +29,16 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
     @Override
     public Map<String, String> updateAuthorNameTranslation(String name,
                                                            String langCode,
-                                                           String nameTranslation) {
+                                                           String translation) {
         Author author = repository.getByName(name);
-        author.getNameTranslations()
-              .add(mapper.toAuthorTranslation(langCode, nameTranslation));
+        Optional<AuthorTranslation> existedTranslation =
+                repository.getOptionalTranslationFor(author, langCode);
+        if (existedTranslation.isPresent()) {
+            existedTranslation.get().setName(translation);
+        } else {
+            author.addNameTranslation(
+                    mapper.toAuthorTranslation(langCode, translation));
+        }
         repository.save(author);
         return mapper.toDTO(author.getNameTranslations());
     }
@@ -47,7 +54,8 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
     public void deleteAuthorNameTranslationByLangCode(String name,
                                                       String langCode) {
         Author author = repository.getByName(name);
-        author.getNameTranslations().removeIf(byLanguageCode(langCode));
+        author.getNameTranslations()
+              .remove(repository.getTranslationFor(author, langCode));
         repository.save(author);
     }
 
@@ -61,9 +69,9 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
                          .map(AuthorTranslation::getName)
                          .findAny()
                          .orElseThrow(() -> new EntityNotFoundException(
-                                 "Author named " + name
-                                 + " name translation in " + langCode
-                                 + " not found!"));
+                                 "'" + langCode + "' name translation for "
+                                 + "author " + "named " + name
+                                 + " was not found!"));
     }
 
     private Predicate<AuthorTranslation> byLanguageCode(String langCode) {

@@ -1,14 +1,16 @@
 package com.epam.spring.library.model;
 
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @ToString(exclude = {"password", "salt"})
 public class User {
 
@@ -40,6 +42,8 @@ public class User {
 
     @ManyToOne
     private Language preferredLanguage;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar fineLastChecked;
 
     /**
@@ -54,5 +58,22 @@ public class User {
      */
     public enum State {
         @Hidden UNKNOWN, VALID, BLOCKED, @Hidden DELETED
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        User other = (User) o;
+        return email != null && Objects.equals(email, other.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

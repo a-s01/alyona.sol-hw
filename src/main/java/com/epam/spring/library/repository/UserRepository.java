@@ -17,7 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmail(String email);
 
-    //Page<User> findTop10ByStateNotEquals(User.State state, Pageable page);
     Page<User> findTop10ByStateNot(State state, Pageable pageable);
 
     default User getActiveUser(String email) {
