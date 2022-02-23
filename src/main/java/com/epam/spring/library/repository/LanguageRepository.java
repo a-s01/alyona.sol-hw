@@ -25,8 +25,7 @@ public interface LanguageRepository
     Language findByCode(@Param("code") String code);
 
     default Language getLanguage(String code) {
-        Language lang = findByCode(code); // seems like Hibernate
-        // default caching doesn't here, so I'll cache is by myself
+        Language lang = findByCode(code);
         if (Objects.isNull(lang)) {
             throw new EntityNotFoundException(
                     "Language with code " + code + " doesn't exists");

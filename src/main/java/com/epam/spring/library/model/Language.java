@@ -31,11 +31,11 @@ public class Language {
             return false;
         }
         Language other = (Language) o;
-        return code != null && Objects.equals(code, other.code);
+        return Objects.equals(code, other.code);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(code);
     }
 }

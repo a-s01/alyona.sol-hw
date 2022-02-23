@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static com.epam.spring.library.model.User.State.DELETED;
 
@@ -20,13 +21,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Page<User> findTop10ByStateNot(State state, Pageable pageable);
 
     default User getActiveUser(String email) {
-        return findByEmail(email).filter(this::notDeleted)
+        return findByEmail(email).filter(notDeleted())
                                  .orElseThrow(() -> new EntityNotFoundException(
                                          "User with email " + email
                                          + " was not found"));
     }
 
-    default boolean notDeleted(User user) {
-        return user.getState() != DELETED;
+    default Predicate<User> notDeleted() {
+        return user -> user.getState() != DELETED;
     }
 }

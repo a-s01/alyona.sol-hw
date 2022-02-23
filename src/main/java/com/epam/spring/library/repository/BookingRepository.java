@@ -16,8 +16,6 @@ import static com.epam.spring.library.model.Booking.State.DONE;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
-    List<Booking> findByUser(User user);
-
     List<Booking> findByUserAndStateNotIn(User user,
                                           Collection<Booking.State> states);
 

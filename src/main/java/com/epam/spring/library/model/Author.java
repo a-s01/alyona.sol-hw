@@ -47,7 +47,7 @@ public class Author {
             return false;
         }
         Author other = (Author) o;
-        return name != null && Objects.equals(name, other.name);
+        return Objects.equals(name, other.name);
     }
 
     /**
@@ -56,6 +56,6 @@ public class Author {
      */
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(name);
     }
 }

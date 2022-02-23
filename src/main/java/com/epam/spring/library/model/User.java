@@ -69,11 +69,11 @@ public class User {
             return false;
         }
         User other = (User) o;
-        return email != null && Objects.equals(email, other.email);
+        return Objects.equals(email, other.email);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(email);
     }
 }

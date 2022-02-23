@@ -48,7 +48,8 @@ class BookAuthorServiceImpl implements BookAuthorService {
     public Set<AuthorDTO> updateAuthorsOfBook(String isbn,
                                               List<AuthorDTO> authorDTOs) {
         Book book = repository.getBook(isbn);
-        book.getAuthors().retainAll(getNewAuthorList(authorDTOs));
+        book.getAuthors().clear();
+        book.getAuthors().addAll(getNewAuthorList(authorDTOs));
         repository.save(book);
         return authorMapper.toDTO(book.getAuthors());
     }

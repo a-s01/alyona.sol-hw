@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,7 +38,8 @@ class ErrorHandler {
         log(ex, hm);
         return ex.getAllErrors()
                  .stream()
-                 .map(e -> getErrorDTO(e.getDefaultMessage(), VALIDATION_ERROR))
+                 .map(ObjectError::getDefaultMessage)
+                 .map(toErrorDTOFunction())
                  .collect(Collectors.toList());
     }
 
@@ -49,12 +51,13 @@ class ErrorHandler {
         log(ex, hm);
         return ex.getConstraintViolations()
                  .stream()
+                 .map(ConstraintViolation::getMessage)
                  .map(toErrorDTOFunction())
                  .collect(Collectors.toList());
     }
 
-    private Function<ConstraintViolation<?>, ErrorDTO> toErrorDTOFunction() {
-        return e -> getErrorDTO(e.getMessage(), VALIDATION_ERROR);
+    private Function<String, ErrorDTO> toErrorDTOFunction() {
+        return s -> getErrorDTO(s, VALIDATION_ERROR);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -111,8 +114,8 @@ class ErrorHandler {
     public ErrorDTO handleDataIntegrityViolationException(
             DataIntegrityViolationException ex) {
         final String rootCauseMsg = getRootCause(ex).getMessage();
-        log.error("{}: {}: {}", ex.getClass().getSimpleName(),
-                  ex.getMessage(), rootCauseMsg);
+        log.error("{}: {}: {}", ex.getClass().getSimpleName(), ex.getMessage(),
+                  rootCauseMsg);
         return getErrorDTO(rootCauseMsg, PROCESSING_ERROR);
     }
 

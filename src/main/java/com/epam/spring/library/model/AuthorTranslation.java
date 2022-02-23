@@ -42,11 +42,11 @@ public class AuthorTranslation {
             return false;
         }
         AuthorTranslation other = (AuthorTranslation) o;
-        return name != null && Objects.equals(name, other.name);
+        return Objects.equals(name, other.name);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(name);
     }
 }

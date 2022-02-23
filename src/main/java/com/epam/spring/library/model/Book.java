@@ -35,7 +35,7 @@ public class Book {
 
     @Column(nullable = false)
     private int keepPeriod;
-
+    
     @ManyToMany
     @ToString.Exclude
     private final Set<Author> authors = new HashSet<>();
@@ -49,11 +49,11 @@ public class Book {
             return false;
         }
         Book other = (Book) o;
-        return isbn != null && Objects.equals(isbn, other.isbn);
+        return Objects.equals(isbn, other.isbn);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(isbn);
     }
 }
