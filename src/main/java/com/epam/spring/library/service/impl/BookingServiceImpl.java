@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ class BookingServiceImpl implements BookingService {
         return repository.findAll(page).map(mapper::toDTO);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public BookingDTO createBooking(BookingDTO bookingDTO) {
         Booking booking = mapper.toBooking(bookingDTO);
@@ -38,6 +41,7 @@ class BookingServiceImpl implements BookingService {
                 repository.save(booking));
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public BookingDTO updateBooking(int id, BookingDTO bookingDTO) {
         Booking toUpdate = repository.getBooking(id);

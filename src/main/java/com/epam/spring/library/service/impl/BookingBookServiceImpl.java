@@ -10,8 +10,10 @@ import com.epam.spring.library.service.BookingBookService;
 import com.epam.spring.library.service.validation.BookingValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,20 +24,22 @@ class BookingBookServiceImpl implements BookingBookService {
     private final BookMapper bookMapper;
     private final BookingValidationService validator;
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
-    public List<BookDTO> addBookToBooking(int id, List<BookDTO> bookDTOs) {
+    public Set<BookDTO> addBookToBooking(int id, Set<BookDTO> bookDTOs) {
         Booking booking = repository.getBooking(id);
         validator.validateBookListChanges(booking);
-        List<Book> books = bookDTOs
+        Set<Book> books = bookDTOs
                 .stream()
                 .map(BookDTO::getIsbn)
                 .map(bookRepository::getBook)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         booking.getBooks().addAll(books);
         repository.save(booking);
         return bookMapper.toDTO(books);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void deleteBookFromBooking(int id, String isbn) {
         Booking booking = repository.getBooking(id);
@@ -45,25 +49,27 @@ class BookingBookServiceImpl implements BookingBookService {
     }
 
     @Override
-    public List<BookDTO> getBooksInBooking(int id) {
+    public Set<BookDTO> getBooksInBooking(int id) {
         return bookMapper.toDTO(repository.getBooking(id).getBooks());
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
-    public List<BookDTO> updateBooksListInBooking(int id,
-                                                  List<BookDTO> bookDTOs) {
+    public Set<BookDTO> updateBooksListInBooking(int id,
+                                                 Set<BookDTO> bookDTOs) {
         Booking booking = repository.getBooking(id);
         validator.validateBookListChanges(booking);
-        List<Book> newBookList = bookDTOs
+        Set<Book> newBookList = bookDTOs
                 .stream()
                 .map(BookDTO::getIsbn)
                 .map(bookRepository::getBook)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         booking.getBooks().clear();
         booking.getBooks().addAll(newBookList);
         return bookMapper.toDTO(newBookList);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void clearBookListInBooking(int id) {
         validator.validateBookListChanges(repository.getBooking(id));

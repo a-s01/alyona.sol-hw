@@ -32,7 +32,6 @@ public class Author {
      * Hibernate helper method. Reassure association will be set up on both
      * sides
      * @param translation New AuthorTranslation to add
-     * @return updated AuthorTranslation instance
      */
     public void addNameTranslation(AuthorTranslation translation) {
         translation.setAuthor(this);

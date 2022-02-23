@@ -10,6 +10,8 @@ import com.epam.spring.library.repository.BookRepository;
 import com.epam.spring.library.service.BookAuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -27,6 +29,7 @@ class BookAuthorServiceImpl implements BookAuthorService {
         return authorMapper.toDTO(repository.getBook(isbn).getAuthors());
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public Set<AuthorDTO> setAuthorsOfBook(String isbn,
                                            List<AuthorDTO> authorDTOs) {
@@ -40,12 +43,12 @@ class BookAuthorServiceImpl implements BookAuthorService {
         return authorMapper.toDTO(book.getAuthors());
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public Set<AuthorDTO> updateAuthorsOfBook(String isbn,
                                               List<AuthorDTO> authorDTOs) {
         Book book = repository.getBook(isbn);
-        book.getAuthors().clear();
-        book.getAuthors().addAll(getNewAuthorList(authorDTOs));
+        book.getAuthors().retainAll(getNewAuthorList(authorDTOs));
         repository.save(book);
         return authorMapper.toDTO(book.getAuthors());
     }
@@ -57,6 +60,7 @@ class BookAuthorServiceImpl implements BookAuthorService {
                          .collect(Collectors.toList());
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void clearAuthorListOfBook(String isbn) {
         Book book = repository.getBook(isbn);
@@ -64,6 +68,7 @@ class BookAuthorServiceImpl implements BookAuthorService {
         repository.save(book);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void deleteAuthorOfBook(String isbn, String authorName) {
         Book book = repository.getBook(isbn);
@@ -71,6 +76,7 @@ class BookAuthorServiceImpl implements BookAuthorService {
         repository.save(book);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public Set<AuthorDTO> addAuthorsToBook(String isbn,
                                            List<AuthorDTO> authorDTOs) {

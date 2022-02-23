@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.epam.spring.library.model.User.State.DELETED;
 
@@ -30,6 +32,7 @@ class UserServiceImpl implements UserService {
         return mapper.toDTO(user);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         return mapper.toDTO(
@@ -47,6 +50,7 @@ class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public UserDTO updateUser(String email, UserDTO userDTO) {
         User toUpdate = repository.getActiveUser(email);
@@ -54,6 +58,7 @@ class UserServiceImpl implements UserService {
         return mapper.toDTO(repository.save(toUpdate));
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void deleteUser(String email) {
         User user = repository.getActiveUser(email);

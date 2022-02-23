@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,21 +17,21 @@ public class BookingBookController implements BookingBookAPI {
     private final BookingBookService service;
 
     @Override
-    public List<BookDTO> getBooksInBooking(int id) {
+    public Set<BookDTO> getBooksInBooking(int id) {
         return service.getBooksInBooking(id);
     }
 
     @Override
-    public List<BookDTO> addBookListToBooking(int id,
-                                              @RequestBody
-                                                      List<BookDTO> bookDTOs) {
+    public Set<BookDTO> addBookListToBooking(int id,
+                                             @RequestBody
+                                             @NotEmpty Set<@Valid BookDTO> bookDTOs) {
         return service.addBookToBooking(id, bookDTOs);
     }
 
     @Override
-    public List<BookDTO> updateBooksListInBooking(int id,
-                                                  @RequestBody
-                                                          List<BookDTO> bookDTOs) {
+    public Set<BookDTO> updateBooksListInBooking(int id,
+                                                 @RequestBody
+                                                 @NotEmpty Set<@Valid BookDTO> bookDTOs) {
         return service.updateBooksListInBooking(id, bookDTOs);
     }
 

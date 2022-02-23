@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Integer>, AuthorTranslationRepository {
 
+    boolean existsByName(String name);
+
     Optional<Author> findByName(String name);
 
     default Author getByName(String name) {

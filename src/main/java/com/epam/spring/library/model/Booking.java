@@ -1,13 +1,15 @@
 package com.epam.spring.library.model;
 
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,9 +32,9 @@ public class Booking {
     @Column(nullable = false)
     private Place located = Place.LIBRARY;
 
-    @OneToMany
+    @ManyToMany
     @ToString.Exclude
-    private List<Book> books = new ArrayList<>();
+    private Set<Book> books = new HashSet<>();
 
     public enum State {
         @Hidden UNKNOWN, NEW, BOOKED, DELIVERED, DONE, CANCELED

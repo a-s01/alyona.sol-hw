@@ -8,6 +8,8 @@ import com.epam.spring.library.repository.AuthorRepository;
 import com.epam.spring.library.service.AuthorTranslationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Objects;
@@ -26,6 +28,7 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
         return mapper.toDTO(author.getNameTranslations());
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public Map<String, String> updateAuthorNameTranslation(String name,
                                                            String langCode,
@@ -33,6 +36,7 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
         Author author = repository.getByName(name);
         Optional<AuthorTranslation> existedTranslation =
                 repository.getOptionalTranslationFor(author, langCode);
+
         if (existedTranslation.isPresent()) {
             existedTranslation.get().setName(translation);
         } else {
@@ -43,6 +47,7 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
         return mapper.toDTO(author.getNameTranslations());
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void clearAuthorNameTranslationsList(String name) {
         Author author = repository.getByName(name);
@@ -50,6 +55,7 @@ class AuthorTranslationServiceImpl implements AuthorTranslationService {
         repository.save(author);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void deleteAuthorNameTranslationByLangCode(String name,
                                                       String langCode) {

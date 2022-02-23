@@ -5,7 +5,7 @@ import com.epam.spring.library.model.Book;
 import org.mapstruct.*;
 
 import java.time.Year;
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = AuthorMapper.class)
 public interface BookMapper {
@@ -14,7 +14,7 @@ public interface BookMapper {
 
     Book toBook(BookDTO bookDto);
 
-    List<BookDTO> toDTO(List<Book> books);
+    Set<BookDTO> toDTO(Set<Book> books);
 
     @BeanMapping(
             nullValuePropertyMappingStrategy =

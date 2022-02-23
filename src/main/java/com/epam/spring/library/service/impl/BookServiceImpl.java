@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ class BookServiceImpl implements BookService {
         return repository.findAll(page).map(mapper::toDTO);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
         return mapper.toDTO(
@@ -41,6 +44,7 @@ class BookServiceImpl implements BookService {
         return book;
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public BookDTO updateBook(String isbn, BookDTO bookDTO) {
         Book toUpdate = repository.getBook(isbn);
@@ -48,6 +52,7 @@ class BookServiceImpl implements BookService {
         return mapper.toDTO(repository.save(toUpdate));
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void deleteBook(String isbn) {
         repository.deleteByIsbn(isbn);
