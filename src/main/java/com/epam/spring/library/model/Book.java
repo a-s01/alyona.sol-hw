@@ -35,7 +35,7 @@ public class Book {
 
     @Column(nullable = false)
     private int keepPeriod;
-    
+
     @ManyToMany
     @ToString.Exclude
     private final Set<Author> authors = new HashSet<>();
